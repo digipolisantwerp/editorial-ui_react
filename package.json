@@ -18,7 +18,8 @@
   "scripts": {
     "start": "start-storybook -p 9009 -s public",
     "build": "rimraf dist/ && rollup -c",
-    "test": "jest --verbose",
+    "test": "jest --runInBand --verbose",
+    "test:watch": "jest --watchAll",
     "lint": "eslint --ext js,jsx .",
     "build-storybook": "build-storybook -s public"
   },

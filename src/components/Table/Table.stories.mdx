@@ -47,7 +47,17 @@ Group stories based on props
 <Preview>
 	<Story name='Sortable'>
 		{() => {
-			const [sorting, setSorting] = useState({ key: 'firstName', order: 'asc' });
+			const [sorting, setSorting] = useState({ key: 'id', order: 'asc' });
+			const sortedRows = TABLE_MOCK_ROWS.slice(0, 5).sort((a, b) => {
+				{/* Simple string sorting based on our active table sort */}
+				if (a[sorting.key] < b[sorting.key]) {
+					return sorting.order === 'asc' ? 1 : -1;
+				}
+				if (a[sorting.key] > b[sorting.key]) {
+					return sorting.order === 'asc' ? -1 : 1;
+				}
+				return 0;
+			});
 			const onOrderBy = (orderBy) => {
 				action('Sort column');
 				setSorting(orderBy);
@@ -55,7 +65,7 @@ Group stories based on props
 			return (
 				<Table
 					columns={TABLE_MOCK_COLUMNS}
-					rows={TABLE_MOCK_ROWS.slice(0, 5)}
+					rows={sortedRows}
 					activeSorting={sorting}
 					orderBy={setSorting}
 				/>

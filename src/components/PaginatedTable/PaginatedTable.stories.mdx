@@ -1,0 +1,38 @@
+import { useState } from 'react';
+import { action } from '@storybook/addon-actions';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+
+import { TABLE_MOCK_COLUMNS, TABLE_MOCK_ROWS } from '../Table/Table.mock';
+import PaginatedTable from './PaginatedTable';
+
+<Meta title="PaginatedTable" component={PaginatedTable} />
+
+# PaginatedTable
+
+Some explanation about our PaginatedTable component
+
+## Preview of component
+
+<Preview>
+	<Story name='Base'>
+		{() => {
+			const [currentPage, setCurrentPage] = useState(1);
+			const itemsPerPage = 3;
+			const offset = (currentPage - 1) * itemsPerPage;
+			return (
+				<PaginatedTable
+					columns={TABLE_MOCK_COLUMNS}
+					rows={TABLE_MOCK_ROWS.slice(offset, offset + itemsPerPage)}
+					currentPage={currentPage}
+					itemsPerPage={itemsPerPage}
+					onPageChange={setCurrentPage}
+					totalValues={TABLE_MOCK_ROWS.length}
+				/>
+			);
+		}}
+	</Story>
+</Preview>
+
+## Props
+
+<Props of={PaginatedTable} />
