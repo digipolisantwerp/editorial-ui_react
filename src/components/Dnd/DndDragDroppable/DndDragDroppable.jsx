@@ -1,7 +1,17 @@
-import { PropTypes } from 'prop-types';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
+/**
+ * @typedef DndDragDroppableProp
+ * @prop {string[]} [accept]
+ * @prop {boolean} [allowHorizontalDrag]
+ * @prop {number} [index]
+ * @prop {Function} [moveRow]
+ * @prop {Function} [children]
+ * @prop {*} [id]
+ */
+
+/** @param {DndDragDroppableProp} props */
 const DndDragDroppable = ({
 	allowHorizontalDrag = false,
 	accept,
@@ -79,15 +89,6 @@ const DndDragDroppable = ({
 	drag(drop(dragDropRef));
 
 	return children({ dragDropRef, isDragging });
-};
-
-DndDragDroppable.propTypes = {
-	accept: PropTypes.arrayOf(PropTypes.string),
-	allowHorizontalDrag: PropTypes.bool,
-	index: PropTypes.number,
-	moveRow: PropTypes.func,
-	children: PropTypes.func,
-	id: PropTypes.any, // eslint-disable-line
 };
 
 export default DndDragDroppable;

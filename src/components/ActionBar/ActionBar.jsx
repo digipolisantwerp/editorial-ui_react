@@ -10,6 +10,16 @@ import { ActionBarContentSection } from './ActionBar.slots';
 
 const cx = classNames.bind(styles);
 
+/**
+ * @typedef ActionBarProps
+ * @prop {string} [className]
+ * @prop {React.ReactNode} [children]
+ * @prop {React.ReactNode} [container]
+ * @prop {boolean} [disablePortal]
+ * @prop {boolean} isOpen
+ */
+
+/** @param {ActionBarProps} props */
 const ActionBar = ({
 	children,
 	className,

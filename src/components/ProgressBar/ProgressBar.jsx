@@ -2,6 +2,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/**
+ * @typedef {object} ProgressBarProps
+ * @prop {number | string} [value]
+ * @prop {number | string} [max]
+ */
+
+/** @param {ProgressBarProps} props */
 const ProgressBar = ({
 	value = 0,
 	max = 0,

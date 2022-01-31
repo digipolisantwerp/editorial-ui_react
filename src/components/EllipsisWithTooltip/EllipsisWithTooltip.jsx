@@ -8,6 +8,18 @@ import styles from './EllipsisWithTooltip.module.scss';
 
 const cx = classnames.bind(styles);
 
+/**
+ * @typedef EllipsisProp
+ * @prop {string} [className]
+ * @prop {string} [value]
+ * @prop {React.ReactNode[] | React.ReactNode} children
+ * @prop {object} [style]
+ * @prop {TooltipTypeMap.DEFAULT| TooltipTypeMap.PRIMARY | TooltipTypeMap.SECONDARY} [type]
+ * @prop {number} [delayShow]
+ *
+ */
+
+/** @param {EllipsisProp} props */
 const EllipsisWithTooltip = ({
 	children,
 	style,

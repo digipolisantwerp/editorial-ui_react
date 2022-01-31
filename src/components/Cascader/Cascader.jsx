@@ -9,6 +9,46 @@ import { ALLOWED_KEYS, BUILT_IN_PLACEMENTS, REOPEN_POPUP_KEYS } from './Cascader
 import { Menus } from './Menus';
 import './Cascader.scss';
 
+/**
+ * @typedef {object} CascaderOption
+* Value of the option
+* @prop {string|number} value
+* Human readable label
+* @prop {React.ReactNode} label
+* True when loading
+* @prop {boolean} CascaderOptionsProps.loading
+* Indicates the end of a cascader tree
+* @prop {boolean} CascaderOptionsProps.isLeaf
+ */
+
+/**
+ * @typedef CascaderProps
+ * Component class prefix
+ * @prop {string} [prefixCls]
+ * Default value
+ * @prop {string[] | number[]} [defaultValue]
+ * Value
+ * @prop {string[] | number[]} [value]
+ * Cascader options
+ * @prop {object[]} [options]
+ * @prop {string | number} [options.value]
+ * @prop {React.ReactNode} [options.label]
+ * @prop {boolean} [options.loading]
+ * @prop {boolean} [options.isLeaf]
+ * @prop {CascaderOption[]} [options.children]
+ * Change the value on each selection, by default it will only
+ * trigger the onchange event when selecting a leaf option
+ * @prop {boolean} [changeOnSelect]
+ * Callback when finisching the cascader select
+ * @prop {Function} [onChange]
+ * Lazy load children
+ * @prop {Function} [loadData]
+ * Selecting an option is not possible when disabled
+ * @prop {boolean} [disabled]
+ * @prop {React.ReactElement} [children]
+ */
+
+/** @param {CascaderProps} props */
 const Cascader = ({
 	defaultValue,
 	value,

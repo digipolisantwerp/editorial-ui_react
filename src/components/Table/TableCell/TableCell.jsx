@@ -5,6 +5,20 @@ import React from 'react';
 import { isNil } from '../../../helpers';
 import { EllipsisWithTooltip } from '../../EllipsisWithTooltip';
 
+/**
+ * @typedef TableCellProps
+ * @prop {string} [as]
+ * @prop {string[]} [classList]
+ * @prop {string} [className]
+ * @prop {boolean} [ellipsis]
+ * @prop {Function} [component]
+ * @prop {object} [rowData]
+ * @prop {number} [rowIndex]
+ * @prop {number | string | boolean} [value]
+ * @prop {object[]} [style]
+ */
+
+/** @param {TableCellProps} props */
 const TableCell = ({
 	as: HTMLTag = 'td',
 	classList,

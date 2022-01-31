@@ -3,6 +3,19 @@ import React from 'react';
 
 import { VALIDATION_MESSAGES_DEFAULT } from '../FileUpload.const';
 
+/**
+ * @typedef ValidationListProp
+ * @prop {object[]} [invalidFiles]
+ * @prop {string[]} [invalidFiles.reasons]
+ * @prop {File} [invalidFiles.file]
+ * @prop {string} [ariaLabelRemove]
+ * @prop {Function} [removeInvalidFile]
+ * @prop {object} [messages]
+ * @prop {string} [messages.INVALID_FILE_TYPE]
+ * @prop {string} [messages.INVALID_FILE_SIZE]
+ * @prop {string} [messages.INVALID_MIME_TYPE]
+ */
+/** @param {ValidationListProp} props */
 const ValidationList = ({
 	invalidFiles = [],
 	messages = VALIDATION_MESSAGES_DEFAULT,

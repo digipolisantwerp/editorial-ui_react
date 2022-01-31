@@ -3,6 +3,7 @@
   "version": "0.0.19",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "types": "./types/types.d.ts",
   "scripts": {
     "prepublish": "npm run test && npm run build",
     "start": "start-storybook -p 9009 -s public",
@@ -12,7 +13,8 @@
     "lint": "npm run lint:scss && npm run lint:js",
     "lint:js": "eslint --ext js,jsx,ts .",
     "lint:scss": "stylelint '?(.)**/*.{css,scss}' --aei",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/. -d types"
   },
   "publishConfig": {
     "@acpaas-ui:registry": "https://nexusrepo.antwerpen.be/repository/npm-private"
@@ -35,6 +37,7 @@
     "@popperjs/core": "^2.6.0",
     "array-tree-filter": "^2.1.0",
     "classnames": "^2.2.6",
+    "docsjs": "^1.2.7",
     "lodash.debounce": "^4.0.8",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.1",
@@ -91,6 +94,7 @@
     "stylelint": "^13.2.1",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.18.0",
+    "tsd-jsdoc": "^2.5.0",
     "typescript": "^3.8.3"
   }
 }

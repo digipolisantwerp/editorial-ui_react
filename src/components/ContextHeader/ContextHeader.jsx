@@ -11,6 +11,23 @@ import { ContextHeaderActionsSection, ContextHeaderTopSection } from './ContextH
 
 const cx = classNames.bind(styles);
 
+/**
+ * @typedef ContextHeaderProps
+ * @prop {string} [className]
+ * @prop {React.ReactNode|React.ReactNode[]} [children]
+ * @prop {string | React.ReactNode} [title]
+ * @prop {object[]} [badges]
+ * @prop {'primary' | 'secondary' | 'success' | 'warning' | 'danger'} badges.type
+ * @prop {string} badges.name
+ * @prop {object[]} [tabs]
+ * @prop {string} tabs.name
+ * @prop {string} tabs.target
+ * @prop {boolean} [tabs.active]
+ * @prop {boolean} [tabs.disabled]
+ * @prop {Function} [linkProps]
+ *
+ */
+/** @param {ContextHeaderProps} props */
 const ContextHeader = ({
 	className,
 	children,

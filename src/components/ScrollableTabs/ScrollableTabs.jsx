@@ -9,6 +9,18 @@ import styles from './ScrollableTabs.module.scss';
 
 const cx = classnames.bind(styles);
 
+/**
+ * @typedef ScrollableTabsProps
+ * @prop {string} [className]
+ * @prop {object[]} [items]
+ * @prop {string} item.name
+ * @prop {string} item.target
+ * @prop {boolean} [item.active]
+ * @prop {boolean} [item.disabled]
+ * @prop {Function} [linkProps]
+ */
+
+/** @param {ScrollableTabsProps} props */
 const ScrollableTabs = ({ className, items = [], linkProps = (props) => props }) => {
 	/**
 	 * Hooks

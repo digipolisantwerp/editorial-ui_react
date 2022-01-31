@@ -13,6 +13,18 @@ import { usePopper } from 'react-popper';
 import { TooltipTypeMap } from './Tooltip.const';
 import './Tooltip.scss';
 
+/**
+ * @typedef TooltipProps
+ * @prop {React.ReactNode[] | React.ReactNode} children
+ * @prop {TooltipTypeMap.DEFAULT | TooltipTypeMap.PRIMARY | TooltipTypeMap.SECONDARY} [type]
+ * @prop {Function | {current: Element}} targetRef
+ * @prop {boolean} isVisible
+ * @prop {boolean} [disablePortal]
+ * @prop {React.ReactNode} [container]
+ * @prop {string} [placement]
+ */
+
+/** @param {TooltipProps} props */
 const Tooltip = ({
 	children,
 	targetRef,

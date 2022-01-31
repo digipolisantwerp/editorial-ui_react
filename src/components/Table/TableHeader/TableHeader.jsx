@@ -3,6 +3,24 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/**
+ * @typedef TableHeaderProps
+ * @prop {string} [as]
+ * @prop {string[]} [classList]
+ * @prop {string} [className]
+ * @prop {string} label
+ * @prop {string} [value]
+ * @prop {Function} [component]
+ * @prop {boolean} [disableSorting]
+ * @prop {object[]} [activeSorting]
+ * @prop {string} [activeSorting.key]
+ * @prop {'asc' | 'desc'} [activeSorting.order]
+ * @prop {Function} [onSortClick]
+ * @prop {string} [width]
+ * @prop {boolean} [hideLabel]
+ */
+
+/** @param {TableHeaderProps} props */
 const TableHeader = ({
 	activeSorting = { key: '', order: 'asc' },
 	as: HTMLTag = 'th',

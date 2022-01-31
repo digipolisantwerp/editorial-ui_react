@@ -5,6 +5,19 @@ import sanitizeHtml from 'sanitize-html';
 
 import './NavList.scss';
 
+/**
+ * @typedef NavListProps
+ * @prop {string} [className]
+ * @prop {React.ElementType} [linkComponent]
+ * @prop {object[]} items
+ * @prop {boolean} [items.hasError]
+ * @prop {string} items.label
+ * @prop {string} [items.description]
+ * @prop {'large'} [size]
+ * @prop {boolean} [lockBodyScroll]
+ */
+
+/** @param {NavListProps} props */
 const NavList = ({ className, linkComponent: LinkComponent = 'a', items }) => (
 	<ul className={classnames(className, 'm-nav-list')}>
 		{items.map(({
