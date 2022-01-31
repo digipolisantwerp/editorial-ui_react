@@ -10,6 +10,26 @@ import { useSlot } from '../../hooks/useSlot';
 import './Filter.scss';
 import { FilterBody } from './Filter.slots';
 
+/**
+ * @typedef FilterProps
+ * @prop {string} [actionsClassName]
+ * @prop {React.ReactNode[]  | React.ReactNode} [children]
+ * @prop {string} [className]
+ * @prop {string} [title]
+ * @prop {string} [noFilterText]
+ * @prop {Function} [onConfirm]
+ * @prop {string} [confirmText]
+ * @prop {Function} [onClean]
+ * @prop {string} [cleanText]
+ * @prop {object[]} [activeFilters]
+ * @prop {string} [activeFilters.valuePrefix]
+ * @prop {string} [activeFilters.value]
+ * @prop {string} [activeFilters.key]
+ * @prop {Function} [onFilterRemove]
+ * @prop {boolean} [enableSubmitOnEnter]
+ */
+
+/** @param {FilterProps} props */
 const Filter = ({
 	actionsClassName,
 	className,

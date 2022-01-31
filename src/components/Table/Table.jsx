@@ -15,6 +15,51 @@ import './Table.scss';
 
 const DND_ITEM_TYPE = 'row';
 
+/**
+ * @typedef TableProps
+ * @prop {string} [dataKey]
+ * @prop {string} [className]
+ * @prop {string} [tableClassName]
+ * @prop {object[]} [rows]
+ *
+ * @prop {object[]} [columns]
+ * @prop {string} columns.label
+ * @prop {string} [columns.value]
+ * @prop {Function} [columns.component]
+ * @prop {Function} [columns.headerComponent]
+ * @prop {Function} [columns.format]
+ * @prop {boolean} [columns.hidden]
+ * @prop {boolean} [columns.hideLabel]
+ * @prop {boolean} [columns.disabled]
+ * @prop {boolean} [columns.ellipsis]
+ * @prop {string} [columns.width]
+ * @prop {boolean} [columns.disableSorting]
+ * @prop {string[]} [columns.classList]
+ * @prop {string} [columns.fallback]
+ *
+ * @prop {[] | object} [expandedRows]
+ * @prop {boolean} [loading]
+ * @prop {boolean} [responsive]
+ * @prop {boolean} [fixed]
+ * @prop {boolean} [hasClickAction]
+ *
+ * @prop {object[]} [activeSorting]
+ * @prop {string} [activeSorting.key]
+ * @prop {'asc' | 'desc'} [activeSorting.order]
+ *
+ * @prop {string} [noDataMessage]
+ * @prop {string} [loadDataMessage]
+ * @prop {string} [noColumnsMessage]
+ * @prop {Function} [orderBy]
+ * @prop {Function} [rowClicked]
+ * @prop {Function} [rowExpansionTemplate]
+ * @prop {boolean} [draggable]
+ * @prop {boolean} [striped]
+ * @prop {'primary' | 'secondary'} [type]
+ * @prop {Function} [moveRow]
+ */
+
+/** @param {TableProps} props */
 const Table = ({
 	dataKey,
 	className,

@@ -2,6 +2,20 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/**
+ * @typedef TableRowProps
+ * @prop {React.ReactNode} children
+ * @prop {string} [className]
+ * @prop {boolean} [collapseOnDrag]
+ * @prop {boolean} [hasClickAction]
+ * @prop {boolean} [isDragging]
+ * @prop {boolean} [isLast]
+ * @prop {number} [level]
+ * @prop {Function} [onClick]
+ * @prop {Function | {current: Element}} [trRef]
+ */
+
+/** @param {TableRowProps} props */
 const TableRow = ({
 	children,
 	className,

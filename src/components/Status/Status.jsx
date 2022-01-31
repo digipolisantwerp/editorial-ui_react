@@ -3,6 +3,11 @@ import React from 'react';
 
 import { typeMap } from './Status.helpers';
 
+/**
+ * @typedef {{label: string, type: 'ACTIVE' | 'INACTIVE' | 'ARCHIVED' }} StatusProps
+ */
+
+/** @param {StatusProps} props */
 const Status = ({
 	label,
 	type,

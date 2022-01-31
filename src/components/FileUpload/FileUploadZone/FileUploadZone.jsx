@@ -7,6 +7,24 @@ import { ProgressBar } from '../../ProgressBar';
 import { FileUploadDescription, FileUploadMessage } from '../FileUpload.slots';
 import { Uploader } from '../Uploader';
 
+/**
+ * @typedef FileUploadZoneProps
+ * @prop {boolean} [autoUpload]
+ * @prop {string} [id]
+ * @prop {Uploader} [uploader]
+ * @prop {boolean} [disabled]
+ * @prop {boolean} [multiple]
+ * @prop {string}  [ariaId]
+ * @prop {Function} [uploadedFiles]
+ * @prop {Function} [invalidFiles]
+ * @prop {Function} [onRequestError]
+ * @prop {Function} [onCustomClick]
+ * @prop {Function} [onCustomDrop]
+ * @prop {string[]} [allowedMimeTypes]
+ * @prop {string[]} [allowedFileTypes]
+ * @prop {React.ReactNode[] | React.ReactNode} [children]
+ */
+/** @param {FileUploadZoneProps} props */
 const FileUploadZone = ({
 	autoUpload = true,
 	id = '',

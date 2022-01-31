@@ -4,6 +4,12 @@ import React from 'react';
 
 import '../Table.scss';
 
+/**
+ * @typedef {object} TableLoaderProp
+ * @prop {string} [loadDataMessage]
+ */
+
+/** @param {TableLoaderProp} props */
 const TableLoader = ({
 	loadDataMessage,
 }) => (

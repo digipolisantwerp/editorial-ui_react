@@ -11,6 +11,29 @@ import {
 } from './Timepicker.helpers';
 import './Timepicker.scss';
 
+/**
+ * @typedef TimePickerProps
+ * @prop {string} id
+ * @prop {string} [className]
+ * @prop {boolean} [required]
+ * @prop {boolean} [disabled]
+ * @prop {number | string} [value]
+ * @prop {string} [hourLabel]
+ * @prop {string} [minuteLabel]
+ * @prop {string} [secondLabel]
+ * @prop {string} [millisecondLabel]
+ * @prop {string} [hourPlaceholder]
+ * @prop {string} [minutePlaceholder]
+ * @prop {string} [secondPlaceholder]
+ * @prop {string} [millisecondPlaceholder]
+ * @prop {number} [hourStep]
+ * @prop {number} [minuteStep]
+ * @prop {number} [secondStep]
+ * @prop {number} [millisecondStep]
+ * @prop {Function} [onChange]
+ */
+
+/** @param {TimePickerProps} props */
 const Timepicker = ({
 	id,
 	className,

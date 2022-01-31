@@ -5,6 +5,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const DNDContext = createDndContext(HTML5Backend);
 
+/**
+ * @typedef {object} DndContainerProp
+ * @prop {boolean} [draggable]
+ * @prop {React.ReactNode[] | React.ReactNode} [children]
+ */
+
+/** @param {DndContainerProp} props */
 const DndContainer = ({ draggable, children }) => {
 	const manager = useRef(DNDContext);
 

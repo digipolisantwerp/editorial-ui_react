@@ -3,6 +3,35 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/**
+ * @typedef {object} CascaderOption
+* Value of the option
+* @prop {string|number} value
+* Human readable label
+* @prop {React.ReactNode} label
+* True when loading
+* @prop {boolean} CascaderOptionsProps.loading
+* Indicates the end of a cascader tree
+* @prop {boolean} CascaderOptionsProps.isLeaf
+ */
+
+/**
+ * @typedef MenusProps
+ * @prop {string} [prefixCls]
+ * Value
+ * @prop {string[] | number[]} [value]
+ * Callback when selecting an option
+ * @prop {function} [onSelect]
+ * Options
+ * @prop {object[]} [options]
+ * @prop {string | number} [options.value]
+ * @prop {React.ReactNode} [options.label]
+ * @prop {boolean} [options.loading]
+ * @prop {boolean} [options.isLeaf]
+ * @prop {CascaderOption[]} [options.children]
+ */
+
+/** @param {MenusProps} props */
 const Menus = ({
 	value = [],
 	options = [],

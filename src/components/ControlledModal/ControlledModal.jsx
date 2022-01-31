@@ -13,6 +13,19 @@ import {
 
 const cx = classnames.bind(styles);
 
+/**
+ * @typedef ControlledModalProp
+ * @prop {string} [className]
+ * @prop {React.ReactElement} [children]
+ * @prop {string} [overlayClassName]
+ * @prop {Element} [node]
+ * @prop {Function} [onClose]
+ * @prop {boolean} show
+ * @prop {'large'} [size]
+ * @prop {boolean} [lockBodyScroll]
+ */
+
+/** @param {ControlledModalProp} props */
 const ControlledModal = ({
 	children, className, overlayClassName, lockBodyScroll = true, node, onClose, show, size,
 }) => {

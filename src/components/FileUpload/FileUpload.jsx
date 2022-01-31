@@ -10,6 +10,34 @@ import { FileUploadZone } from './FileUploadZone';
 import { Uploader } from './Uploader';
 import { ValidationList } from './ValidationList';
 
+/**
+ * @typedef FileUploadProps
+ * @prop {string} id
+ * @prop {boolean} [disabled]
+ * @prop {string} [ariaLabelRemove]
+ * @prop {object} [options]
+ * @prop {string[]} [options.allowedMimeTypes]
+ * @prop {string[]} [options.allowedFileTypes]
+ * @prop {number} [options.maxFileSize]
+ * @prop {string} [options.type]
+ * @prop {string} [options.url]
+ * @prop {number} [options.fileLimit]
+ * @prop {object} [options.messages]
+ * @prop {string} [options.messages.INVALID_FILE_TYPE]
+ * @prop {string} [options.messages.INVALID_FILE_SIZE]
+ * @prop {string} [options.messages.INVALID_MIME_TYPE]
+ * @prop {string} [options.messages.REQUEST_ERROR]
+ * @prop {object} [options.requestHeader]
+ * @prop {string} [options.requestHeader.key]
+ * @prop {string} [options.requestHeader.value]
+ * @prop {object[]} [files]
+ * @prop {string} files.id
+ * @prop {string} files.name
+ * @prop {Function} [selectUploadedFiles]
+ * @prop {Function} [removeFile]
+ * @prop {React.ReactNode[] | React.ReactNode} [children]
+ */
+/** @param {FileUploadProps} props */
 const FileUpload = ({
 	id = '',
 	ariaLabelRemove = 'Verwijder',

@@ -4,6 +4,16 @@ import React from 'react';
 
 import '../Table.scss';
 
+/**
+ * @typedef TablePlaceholderProps
+ * @prop {boolean} hasCols
+ * @prop {boolean} hasData
+ * @prop {string} [className]
+ * @prop {string} [noColumnsMessage]
+ * @prop {string} [noDataMessage]
+ */
+
+/** @param {TablePlaceholderProps} props */
 const TablePlaceholder = ({
 	hasCols,
 	hasData,
