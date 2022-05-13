@@ -18,13 +18,17 @@ const FormFieldChildren = ({ children, ...props }) => React.cloneElement(
 
 const MultilanguageField = ({
 	asComponent, multiLang = true, children, ...props
-}) => (
-	<div className={multiLang && cx('u-bg-light', 'o-multilanguage-field')}>
-		{multiLang && <Icon name="globe" className={cx('o-multilanguage-field__icon')} />}
-		{asComponent && <FormFieldAsComponent asComponent={asComponent} {...props} />}
-		{children && <FormFieldChildren {...props}>{children}</FormFieldChildren>}
-	</div>
-);
+}) => {
+	console('1', FormFieldChildren);
+	console('2', children);
+	return (
+		<div className={multiLang && cx('u-bg-light', 'o-multilanguage-field')}>
+			{multiLang && <Icon name="globe" className={cx('o-multilanguage-field__icon')} />}
+			{asComponent && <FormFieldAsComponent asComponent={asComponent} {...props} />}
+			{children && <FormFieldChildren {...props}>{children}</FormFieldChildren>}
+		</div>
+	);
+};
 
 FormFieldAsComponent.propTypes = {
 	asComponent: PropTypes.any,
