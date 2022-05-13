@@ -12,7 +12,7 @@ const FormFieldAsComponent = ({ asComponent, ...props }) => React.createElement(
 	asComponent, props,
 );
 
-const FormFieldChildren = ({ children, ...props }) => React.createElement(
+const FormFieldChildren = ({ children, ...props }) => React.cloneElement(
 	children, props,
 );
 
@@ -21,6 +21,7 @@ const MultilanguageField = ({
 }) => {
 	console.log('1', FormFieldChildren);
 	console.log('2', children);
+
 	return (
 		<div className={multiLang && cx('u-bg-light', 'o-multilanguage-field')}>
 			{multiLang && <Icon name="globe" className={cx('o-multilanguage-field__icon')} />}
