@@ -12,7 +12,7 @@ const FormFieldAsComponent = ({ asComponent, ...props }) => React.createElement(
 	asComponent, props,
 );
 
-const FormFieldChildren = ({ children, ...props }) => React.cloneElement(
+const FormFieldChildren = ({ children, ...props }) => React.createElement(
 	children, props,
 );
 
