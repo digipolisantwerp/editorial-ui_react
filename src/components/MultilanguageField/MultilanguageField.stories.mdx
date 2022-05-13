@@ -1,0 +1,29 @@
+import { useState  } from 'react';
+import { TextField, Button } from '@acpaas-ui/react-components';
+import { action } from '@storybook/addon-actions';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+
+import MultilanguageField from './MultilanguageField';
+
+<Meta title="MultilanguageField" component={MultilanguageField} />
+
+# Cascader
+
+Simple Cascader
+
+## Preview of component
+
+<Preview>
+	<Story name='asComponent'>
+		<MultilanguageField asComponent={() => <input type="text" />} multilang={true} />
+	</Story>
+</Preview>
+
+
+<Preview>
+	<Story name='children'>
+		<MultilanguageField multilang={true} style={{ backgroundColor: 'red' }}>
+			<input type="text" />
+		</MultilanguageField>
+	</Story>
+</Preview>
