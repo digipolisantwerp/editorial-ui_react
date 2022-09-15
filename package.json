@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@a-ui/core": "^4.1.1",
-    "@acpaas-ui/react-components": "5.0.7",
+    "@acpaas-ui/react-components": "6.4.1",
     "@popperjs/core": "^2.6.0",
     "array-tree-filter": "^2.1.0",
     "classnames": "^2.2.6",
@@ -80,7 +80,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.3",
     "react-scripts": "4.0.1",
     "regenerator-runtime": "^0.13.5",
     "rimraf": "^3.0.2",
