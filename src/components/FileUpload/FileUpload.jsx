@@ -1,5 +1,8 @@
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+	forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState,
+} from 'react';
 
 import { isNumber } from '../../helpers';
 import { useSlot } from '../../hooks/useSlot';
@@ -10,7 +13,7 @@ import { FileUploadZone } from './FileUploadZone';
 import { Uploader } from './Uploader';
 import { ValidationList } from './ValidationList';
 
-const FileUpload = ({
+const FileUpload = forwardRef(({
 	id = '',
 	ariaLabelRemove = 'Verwijder',
 	disabled = false,
@@ -19,7 +22,7 @@ const FileUpload = ({
 	selectUploadedFiles = () => null,
 	removeFile = () => null,
 	children,
-}) => {
+}, ref) => {
 	/**
 	 * Hooks
 	 */
@@ -27,6 +30,14 @@ const FileUpload = ({
 	const fileUploadMessageSlot = useSlot(FileUploadMessage, children);
 	const [uploader, setUploader] = useState(null);
 	const [invalidFiles, setInvalidFiles] = useState([]);
+	const [queuedFiles, setQueuedFiles] = useState([]);
+	const uploadZoneRef = useRef();
+
+	useImperativeHandle(ref, () => ({
+		startUpload() {
+			uploadZoneRef.current.uploadFiles(queuedFiles);
+		},
+	}));
 
 	useEffect(() => {
 		if (!uploader) {
@@ -47,6 +58,10 @@ const FileUpload = ({
 	 */
 	const onInvalidFiles = (invFiles) => {
 		setInvalidFiles(invFiles);
+	};
+
+	const onQueuedFiles = (qFiles) => {
+		setQueuedFiles(qFiles);
 	};
 
 	const onRequestError = (error) => {
@@ -91,7 +106,10 @@ const FileUpload = ({
 	return (
 		<div className="m-upload">
 			<FileUploadZone
+				ref={uploadZoneRef}
+				autoUpload={options.autoUpload}
 				invalidFiles={onInvalidFiles}
+				queuedFiles={onQueuedFiles}
 				onRequestError={onRequestError}
 				uploadedFiles={selectUploadedFiles}
 				disabled={disabled || !uploadZoneIsDisabled}
@@ -114,7 +132,7 @@ const FileUpload = ({
 						</FileUploadDescription>
 					) }
 			</FileUploadZone>
-			{ renderFiles(files) }
+			{ renderFiles([...files, ...queuedFiles]) }
 			<ValidationList
 				messages={options.messages}
 				ariaLabelRemove={ariaLabelRemove}
@@ -123,13 +141,14 @@ const FileUpload = ({
 			/>
 		</div>
 	);
-};
+});
 
 FileUpload.propTypes = {
 	id: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 	ariaLabelRemove: PropTypes.string,
 	options: PropTypes.shape({
+		autoUpload: PropTypes.bool,
 		allowedMimeTypes: PropTypes.arrayOf(PropTypes.string),
 		allowedFileTypes: PropTypes.arrayOf(PropTypes.string),
 		maxFileSize: PropTypes.number,
@@ -146,6 +165,10 @@ FileUpload.propTypes = {
 			key: PropTypes.string,
 			value: PropTypes.string,
 		}),
+		requestHeaders: PropTypes.arrayOf(PropTypes.shape({
+			key: PropTypes.string,
+			value: PropTypes.string,
+		})),
 	}),
 	files: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.string.isRequired,

@@ -1,13 +1,16 @@
+/* eslint-disable react/require-default-props */
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useMemo, useRef, useState } from 'react';
+import React, {
+	forwardRef, useImperativeHandle, useMemo, useRef, useState,
+} from 'react';
 
 import { useSlot } from '../../../hooks/useSlot';
 import { ProgressBar } from '../../ProgressBar';
 import { FileUploadDescription, FileUploadMessage } from '../FileUpload.slots';
 import { Uploader } from '../Uploader';
 
-const FileUploadZone = ({
+const FileUploadZone = forwardRef(({
 	autoUpload = true,
 	id = '',
 	ariaId = '',
@@ -18,12 +21,12 @@ const FileUploadZone = ({
 	onCustomDrop,
 	uploadedFiles = () => null,
 	invalidFiles = () => null,
+	queuedFiles = () => null,
 	onRequestError = () => null,
 	allowedMimeTypes = [],
 	allowedFileTypes = [],
 	children,
-
-}) => {
+}, ref) => {
 	/**
 	 * Hooks
 	 */
@@ -35,6 +38,13 @@ const FileUploadZone = ({
 	const [uploadingFiles, setUploadingFiles] = useState([]);
 	const accept = useMemo(() => allowedFileTypes.map((type) => `.${type}`).concat(allowedMimeTypes).join(','),
 		[allowedFileTypes, allowedMimeTypes]);
+
+	useImperativeHandle(ref, () => ({
+		uploadFiles(files) {
+			// eslint-disable-next-line no-use-before-define
+			uploadFiles(files);
+		},
+	}));
 
 	/**
 	 * Methods
@@ -49,6 +59,7 @@ const FileUploadZone = ({
 
 	const uploadFiles = (files) => {
 		// Reset progress
+		queuedFiles([]);
 		setUploadProgress(0);
 		setUploadingFiles(files);
 
@@ -95,8 +106,13 @@ const FileUploadZone = ({
 		if (customHandler) {
 			customHandler(response.validFiles);
 		}
+
 		if (autoUpload && response.validFiles.length > 0) {
 			uploadFiles(response.validFiles);
+		}
+
+		if (!autoUpload && response.validFiles.length > 0) {
+			queuedFiles(response.validFiles);
 		}
 	};
 
@@ -200,7 +216,7 @@ const FileUploadZone = ({
 			</div>
 		</>
 	);
-};
+});
 
 FileUploadZone.propTypes = {
 	autoUpload: PropTypes.bool,
@@ -211,6 +227,7 @@ FileUploadZone.propTypes = {
 	ariaId: PropTypes.string,
 	uploadedFiles: PropTypes.func,
 	invalidFiles: PropTypes.func,
+	queuedFiles: PropTypes.func,
 	onRequestError: PropTypes.func,
 	onCustomClick: PropTypes.func,
 	onCustomDrop: PropTypes.func,
