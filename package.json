@@ -46,7 +46,7 @@
     "react-dom": "^16.13.0",
     "react-popper": "^2.2.4",
     "rxjs": "^6.6.3",
-    "sanitize-html": "^2.4.0"
+    "sanitize-html": "2.4.0"
   },
   "devDependencies": {
     "@a-ui/flexboxgrid": "^1.0.1",
