@@ -207,6 +207,7 @@ A file upload component
 								value: 'value-2'
 							}]
 						}}
+						selectQueuedFiles={(files) => console.log(files)}
 						files={files}
 						removeFile={(id, index) => setFiles(files.filter(file => file.id === id))}
 						selectUploadedFiles={action()}

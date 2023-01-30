@@ -16,7 +16,7 @@ export class Uploader {
 		};
 	}
 
-	uploadFiles(files = []) {
+	uploadFiles(files = [], extraHeaders) {
 		const formData = this.filesToFormData(files);
 
 		return new Observable((observer) => {
@@ -54,6 +54,12 @@ export class Uploader {
 
 			if (this.options.requestHeaders && Array.isArray(this.options.requestHeaders)) {
 				this.options.requestHeaders.forEach(({ key, value }) => {
+					xhr.setRequestHeader(key, value);
+				});
+			}
+
+			if (extraHeaders && Array.isArray(extraHeaders)) {
+				extraHeaders.forEach(({ key, value }) => {
 					xhr.setRequestHeader(key, value);
 				});
 			}

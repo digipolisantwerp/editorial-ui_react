@@ -35,8 +35,8 @@ const FileUpload = forwardRef(({
 	const uploadZoneRef = useRef();
 
 	useImperativeHandle(ref, () => ({
-		startUpload() {
-			uploadZoneRef.current.uploadFiles(queuedFiles);
+		startUpload(extraHeaders) {
+			uploadZoneRef.current.uploadFiles(queuedFiles, extraHeaders);
 		},
 	}));
 

@@ -40,9 +40,9 @@ const FileUploadZone = forwardRef(({
 		[allowedFileTypes, allowedMimeTypes]);
 
 	useImperativeHandle(ref, () => ({
-		uploadFiles(files) {
+		uploadFiles(files, extraHeaders) {
 			// eslint-disable-next-line no-use-before-define
-			uploadFiles(files);
+			uploadFiles(files, extraHeaders);
 		},
 	}));
 
@@ -57,14 +57,13 @@ const FileUploadZone = forwardRef(({
 		}
 	};
 
-	const uploadFiles = (files) => {
+	const uploadFiles = (files, extraHeaders) => {
 		// Reset progress
-		queuedFiles([]);
 		setUploadProgress(0);
 		setUploadingFiles(files);
 
 		// upload
-		uploader.uploadFiles(files).subscribe(
+		uploader.uploadFiles(files, extraHeaders).subscribe(
 			(response) => {
 				if (response.progress) {
 					setUploadProgress(Math.floor(response.progress * 100));
