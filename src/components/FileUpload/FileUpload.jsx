@@ -20,6 +20,7 @@ const FileUpload = forwardRef(({
 	files = [],
 	options = UPLOAD_OPTIONS_DEFAULT,
 	selectUploadedFiles = () => null,
+	selectQueuedFiles = () => null,
 	removeFile = () => null,
 	children,
 }, ref) => {
@@ -52,6 +53,14 @@ const FileUpload = forwardRef(({
 
 		return true;
 	}, [options.fileLimit, files]);
+
+	useEffect(() => {
+		if (!selectQueuedFiles) {
+			return;
+		}
+
+		selectQueuedFiles(queuedFiles);
+	}, [queuedFiles, selectQueuedFiles]);
 
 	/**
 	 * Methods
@@ -175,6 +184,7 @@ FileUpload.propTypes = {
 		name: PropTypes.string.isRequired,
 	})),
 	selectUploadedFiles: PropTypes.func,
+	selectQueuedFiles: PropTypes.func,
 	removeFile: PropTypes.func,
 	children: PropTypes.node,
 };
