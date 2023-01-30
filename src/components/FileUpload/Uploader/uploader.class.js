@@ -52,6 +52,12 @@ export class Uploader {
 				xhr.setRequestHeader(this.options.requestHeader.key, this.options.requestHeader.value);
 			}
 
+			if (this.options.requestHeaders && Array.isArray(this.options.requestHeaders)) {
+				this.options.requestHeaders.forEach(({ key, value }) => {
+					xhr.setRequestHeader(key, value);
+				});
+			}
+
 			xhr.send(formData);
 		});
 	}
