@@ -57,7 +57,7 @@ const FileUploadZone = forwardRef(({
 		}
 	};
 
-	const uploadFiles = (files, extraHeaders): Promise<void> => new Promise((resolve, reject) => {
+	const uploadFiles = (files, extraHeaders) => new Promise((resolve, reject) => {
 		// Reset progress
 		setUploadProgress(0);
 		setUploadingFiles(files);

@@ -84,7 +84,7 @@ const FileUpload = forwardRef(({
 		setInvalidFiles(invalidFiles.filter((file, i) => i !== index));
 	};
 
-	const onRemoveFile = (fileId, index): void => {
+	const onRemoveFile = (fileId, index) => {
 		// If the file is queued, just delete it.
 		if (!fileId && queuedFiles?.[index]) {
 			return setQueuedFiles(queuedFiles.filter((_, fIndex) => index !== fIndex));
