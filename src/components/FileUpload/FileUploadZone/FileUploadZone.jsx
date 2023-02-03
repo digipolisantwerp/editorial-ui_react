@@ -42,7 +42,7 @@ const FileUploadZone = forwardRef(({
 	useImperativeHandle(ref, () => ({
 		uploadFiles(files, extraHeaders) {
 			// eslint-disable-next-line no-use-before-define
-			uploadFiles(files, extraHeaders);
+			return uploadFiles(files, extraHeaders);
 		},
 	}));
 
@@ -57,7 +57,7 @@ const FileUploadZone = forwardRef(({
 		}
 	};
 
-	const uploadFiles = (files, extraHeaders) => {
+	const uploadFiles = (files, extraHeaders): Promise<void> => new Promise((resolve, reject) => {
 		// Reset progress
 		setUploadProgress(0);
 		setUploadingFiles(files);
@@ -89,14 +89,18 @@ const FileUploadZone = forwardRef(({
 					files,
 					error,
 				});
+
+				reject(error);
 			},
 			() => {
 				setUploadProgress(0);
 				setUploadingFiles([]);
 				clearFileInput();
+
+				resolve();
 			},
 		);
-	};
+	});
 
 	const handleFiles = async (files, customHandler) => {
 		const response = await Promise.resolve(uploader.validateFiles(files));

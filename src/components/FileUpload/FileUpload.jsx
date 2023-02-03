@@ -36,7 +36,7 @@ const FileUpload = forwardRef(({
 
 	useImperativeHandle(ref, () => ({
 		startUpload(extraHeaders) {
-			uploadZoneRef.current.uploadFiles(queuedFiles, extraHeaders);
+			return uploadZoneRef.current.uploadFiles(queuedFiles, extraHeaders);
 		},
 	}));
 
@@ -84,6 +84,15 @@ const FileUpload = forwardRef(({
 		setInvalidFiles(invalidFiles.filter((file, i) => i !== index));
 	};
 
+	const onRemoveFile = (fileId, index): void => {
+		// If the file is queued, just delete it.
+		if (!fileId && queuedFiles?.[index]) {
+			return setQueuedFiles(queuedFiles.filter((_, fIndex) => index !== fIndex));
+		}
+
+		removeFile(fileId, index);
+	};
+
 	/**
 	 * Render
 	 */
@@ -103,7 +112,7 @@ const FileUpload = forwardRef(({
 					<li key={file.id || index}>
 						<span className="fa fa-file-o" />
 						<span className="m-upload__filename">{file.name}</span>
-						<button disabled={disabled} onClick={() => removeFile(file.id, index)} type="button" className="m-upload__delete a-button-transparent a-button--default a-button--small has-icon">
+						<button disabled={disabled} onClick={() => onRemoveFile(file.id, index)} type="button" className="m-upload__delete a-button-transparent a-button--default a-button--small has-icon">
 							<span className="fa fa-close" aria-label="Close" />
 						</button>
 					</li>
