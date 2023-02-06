@@ -1,6 +1,6 @@
 {
   "name": "@acpaas-ui/react-editorial-components",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "scripts": {
