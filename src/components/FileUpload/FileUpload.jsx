@@ -1,5 +1,8 @@
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+	forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState,
+} from 'react';
 
 import { isNumber } from '../../helpers';
 import { useSlot } from '../../hooks/useSlot';
@@ -10,16 +13,17 @@ import { FileUploadZone } from './FileUploadZone';
 import { Uploader } from './Uploader';
 import { ValidationList } from './ValidationList';
 
-const FileUpload = ({
+const FileUpload = forwardRef(({
 	id = '',
 	ariaLabelRemove = 'Verwijder',
 	disabled = false,
 	files = [],
 	options = UPLOAD_OPTIONS_DEFAULT,
 	selectUploadedFiles = () => null,
+	selectQueuedFiles = () => null,
 	removeFile = () => null,
 	children,
-}) => {
+}, ref) => {
 	/**
 	 * Hooks
 	 */
@@ -27,6 +31,14 @@ const FileUpload = ({
 	const fileUploadMessageSlot = useSlot(FileUploadMessage, children);
 	const [uploader, setUploader] = useState(null);
 	const [invalidFiles, setInvalidFiles] = useState([]);
+	const [queuedFiles, setQueuedFiles] = useState([]);
+	const uploadZoneRef = useRef();
+
+	useImperativeHandle(ref, () => ({
+		startUpload(extraHeaders) {
+			return uploadZoneRef.current.uploadFiles(queuedFiles, extraHeaders);
+		},
+	}));
 
 	useEffect(() => {
 		if (!uploader) {
@@ -42,11 +54,23 @@ const FileUpload = ({
 		return true;
 	}, [options.fileLimit, files]);
 
+	useEffect(() => {
+		if (!selectQueuedFiles) {
+			return;
+		}
+
+		selectQueuedFiles(queuedFiles);
+	}, [queuedFiles, selectQueuedFiles]);
+
 	/**
 	 * Methods
 	 */
 	const onInvalidFiles = (invFiles) => {
 		setInvalidFiles(invFiles);
+	};
+
+	const onQueuedFiles = (qFiles) => {
+		setQueuedFiles(qFiles);
 	};
 
 	const onRequestError = (error) => {
@@ -58,6 +82,15 @@ const FileUpload = ({
 
 	const onRemoveInvalidFile = (index) => {
 		setInvalidFiles(invalidFiles.filter((file, i) => i !== index));
+	};
+
+	const onRemoveFile = (fileId, index) => {
+		// If the file is queued, just delete it.
+		if (!fileId && queuedFiles?.[index]) {
+			return setQueuedFiles(queuedFiles.filter((_, fIndex) => index !== fIndex));
+		}
+
+		removeFile(fileId, index);
 	};
 
 	/**
@@ -79,7 +112,7 @@ const FileUpload = ({
 					<li key={file.id || index}>
 						<span className="fa fa-file-o" />
 						<span className="m-upload__filename">{file.name}</span>
-						<button disabled={disabled} onClick={() => removeFile(file.id, index)} type="button" className="m-upload__delete a-button-transparent a-button--default a-button--small has-icon">
+						<button disabled={disabled} onClick={() => onRemoveFile(file.id, index)} type="button" className="m-upload__delete a-button-transparent a-button--default a-button--small has-icon">
 							<span className="fa fa-close" aria-label="Close" />
 						</button>
 					</li>
@@ -91,7 +124,10 @@ const FileUpload = ({
 	return (
 		<div className="m-upload">
 			<FileUploadZone
+				ref={uploadZoneRef}
+				autoUpload={options.autoUpload}
 				invalidFiles={onInvalidFiles}
+				queuedFiles={onQueuedFiles}
 				onRequestError={onRequestError}
 				uploadedFiles={selectUploadedFiles}
 				disabled={disabled || !uploadZoneIsDisabled}
@@ -114,7 +150,7 @@ const FileUpload = ({
 						</FileUploadDescription>
 					) }
 			</FileUploadZone>
-			{ renderFiles(files) }
+			{ renderFiles([...files, ...queuedFiles]) }
 			<ValidationList
 				messages={options.messages}
 				ariaLabelRemove={ariaLabelRemove}
@@ -123,13 +159,14 @@ const FileUpload = ({
 			/>
 		</div>
 	);
-};
+});
 
 FileUpload.propTypes = {
 	id: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 	ariaLabelRemove: PropTypes.string,
 	options: PropTypes.shape({
+		autoUpload: PropTypes.bool,
 		allowedMimeTypes: PropTypes.arrayOf(PropTypes.string),
 		allowedFileTypes: PropTypes.arrayOf(PropTypes.string),
 		maxFileSize: PropTypes.number,
@@ -146,12 +183,17 @@ FileUpload.propTypes = {
 			key: PropTypes.string,
 			value: PropTypes.string,
 		}),
+		requestHeaders: PropTypes.arrayOf(PropTypes.shape({
+			key: PropTypes.string,
+			value: PropTypes.string,
+		})),
 	}),
 	files: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 	})),
 	selectUploadedFiles: PropTypes.func,
+	selectQueuedFiles: PropTypes.func,
 	removeFile: PropTypes.func,
 	children: PropTypes.node,
 };

@@ -11,4 +11,5 @@ export const UPLOAD_OPTIONS_DEFAULT = {
 	maxFileSize: 0, // 0 is infinite
 	url: '',
 	messages: VALIDATION_MESSAGES_DEFAULT,
+	autoUpload: true,
 };

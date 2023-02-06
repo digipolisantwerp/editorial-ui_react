@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { action } from '@storybook/addon-actions'
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 
@@ -180,6 +180,43 @@ A file upload component
 					<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
 					<FileUploadDescription>Optional description message</FileUploadDescription>
 				</FileUploadZone>
+			)
+		}}
+	</Story>
+	<Story name='No Autoupload'>
+		{() => {
+			const [files, setFiles] = useState([]);
+			const ref = useRef();
+			return (
+				<>
+					<FileUpload
+						ref={ref}
+						id="my-upload"
+						options={{
+							allowedMimeTypes: ['application/zip'],
+							allowedFileTypes: ['zip'],
+							maxFileSize: 5000000000000000,
+							url: 'api/upload',
+							fileLimit: 3,
+							autoUpload: false,
+							requestHeaders: [{
+								key: 'x-custom-header-1',
+								value: 'value-1'
+							}, {
+								key: 'x-custom-header-2',
+								value: 'value-2'
+							}]
+						}}
+						selectQueuedFiles={(files) => console.log(files)}
+						files={files}
+						removeFile={(id, index) => setFiles(files.filter(file => file.id === id))}
+						selectUploadedFiles={action()}
+					>
+						<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
+						<FileUploadDescription>Optional description message</FileUploadDescription>
+					</FileUpload>
+					<button onClick={() => ref.current.startUpload()}>Upload</button>
+				</>
 			)
 		}}
 	</Story>
