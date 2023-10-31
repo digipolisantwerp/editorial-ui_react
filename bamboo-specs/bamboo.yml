@@ -1,0 +1,50 @@
+---
+version: 2
+plan:
+  project-key: RED
+  name: editorial-ui_react
+  key: EDITORIALUIREACT
+variables:
+  NPM_USER: bamboo-npm-publisher
+  REGISTRY: https://repository.antwerpen.be/repository/npm-all
+  SECRET: BAMSCRT@0@0@OAOWXH7sfhYtg+etKmSLYLceYFp5Jj7o/h2wAMagjbE=
+
+stages:
+- Source:
+    manual: false
+    final: false
+    jobs:
+    - Build
+
+Build:
+  key: JOB1
+  other:
+    clean-working-dir: true
+  tasks:
+    - checkout:
+        force-clean-build: 'false'
+        description: Checkout Default Repository
+        path: app
+    - script:
+        interpreter: SHELL
+        scripts:
+        - |-
+          cd app
+          echo "Starting publish script..."
+          echo "NPM version"
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm --version
+          npm i --legacy-peer-deps
+          TOKEN=$(curl -s \
+          -H "Accept: application/json" \
+          -H "Content-Type:application/json" \
+          -X PUT --data '{"name": "${bamboo.NPM_USER}", "password": "${bamboo.SECRET}"}' \
+          https://repository.antwerpen.be/repository/npm-all/-/user/org.couchdb.user:bamboo-npm-publisher | grep -o '"token":"[^"]*' | grep -o '[^"]*$')
+          echo > .npmrc
+          npm set //repository.antwerpen.be/repository/:_authToken=${TOKEN}
+          npm publish --registry ${bamboo.REGISTRY}
+          echo "Done publishing package"
+  docker:
+    image: node:18
+  requirements:
+        - system.docker.executable
