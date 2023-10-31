@@ -1,5 +1,6 @@
-import { createEvent, fireEvent, render } from '@testing-library/react';
+import { createEvent, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { NEVER, of } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
@@ -44,14 +45,21 @@ const renderFileUploadZone = (props, MessageComponent, DescriptionComponent) => 
 
 const fireFileUpload = (container, f) => {
 	const fileInput = container.querySelector('.m-upload__input');
-	fireEvent.change(
-		fileInput,
-		{
-			target: {
-				files: [f],
+
+	if (!fileInput) {
+		throw new Error('FileInput not found!');
+	}
+
+	act(() => {
+		fireEvent.change(
+			fileInput,
+			{
+				target: {
+					files: [f],
+				},
 			},
-		},
-	);
+		);
+	});
 };
 
 const fireFileUploadOnDrop = (container, f) => {
@@ -84,7 +92,7 @@ describe('<FileUploadZone/>', () => {
 						file,
 					},
 				];
-				uploader.validateFiles.mockReturnValueOnce({
+				uploader.validateFiles.mockReturnValue({
 					invalidFiles,
 					validFiles: [],
 				});
@@ -94,19 +102,22 @@ describe('<FileUploadZone/>', () => {
 					uploader,
 					invalidFiles: handleInvalidFiles,
 				});
-				await fireFileUpload(container, file);
-				expect(validateFilesSpy).toHaveBeenCalledWith([file]);
-				expect(handleInvalidFiles).toHaveBeenCalledWith(invalidFiles);
+
+				await waitFor(() => {
+					fireFileUpload(container, file);
+					expect(validateFilesSpy).toHaveBeenCalledWith([file]);
+					expect(handleInvalidFiles).toHaveBeenCalledWith(invalidFiles);
+				});
 			});
 		});
 
-		describe('upload a valid file', async () => {
+		describe('upload a valid file', () => {
 			const validFiles = [file];
 			let validateFilesSpy;
 			let uploadFilesSpy;
 
-			await beforeEach(() => {
-				uploader.validateFiles.mockReturnValueOnce({
+			beforeEach(() => {
+				uploader.validateFiles.mockReturnValue({
 					invalidFiles: [],
 					validFiles,
 				});
@@ -114,23 +125,26 @@ describe('<FileUploadZone/>', () => {
 				uploadFilesSpy = jest.spyOn(uploader, 'uploadFiles');
 			});
 
-			it('should show the file name a progress bar when the file is uploading', () => {
-				uploader.uploadFiles.mockReturnValueOnce(NEVER.pipe(startWith({
+			it('should show the file name a progress bar when the file is uploading', async () => {
+				uploader.uploadFiles.mockReturnValue(NEVER.pipe(startWith({
 					progress: 0.5,
 				})));
 				const { container, queryByRole, queryByText } = renderFileUploadZone({
 					uploader,
 				});
-				fireFileUpload(container, file);
-				const progressBar = queryByRole('progressbar');
-				const fileNode = queryByText('example.png');
-				expect(fileNode).toBeDefined();
-				expect(progressBar).toBeDefined();
-				expect(progressBar.style.width).toBe('50%');
+
+				await waitFor(() => {
+					fireFileUpload(container, file);
+					const progressBar = queryByRole('progressbar');
+					const fileNode = queryByText('example.png');
+					expect(fileNode).toBeDefined();
+					expect(progressBar).toBeDefined();
+					expect(progressBar.style.width).toBe('50%');
+				});
 			});
 
-			it('should call the `uploadedFiles`callback when the file has been successfully uploaded', () => {
-				uploader.uploadFiles.mockReturnValueOnce(of({
+			it('should call the `uploadedFiles`callback when the file has been successfully uploaded', async () => {
+				uploader.uploadFiles.mockReturnValue(of({
 					progress: 1,
 					status: 200,
 					data: uploadResponse,
@@ -140,17 +154,20 @@ describe('<FileUploadZone/>', () => {
 					uploader,
 					uploadedFiles: handleUploadedFiles,
 				});
-				fireFileUpload(container, file);
-				expect(validateFilesSpy).toHaveBeenCalledWith([file]);
-				expect(uploadFilesSpy).toHaveBeenCalledWith(validFiles);
-				expect(handleUploadedFiles).toHaveBeenCalledWith(uploadResponse);
+
+				await waitFor(() => {
+					fireFileUpload(container, file);
+					expect(validateFilesSpy).toHaveBeenCalledWith([file]);
+					expect(uploadFilesSpy).toHaveBeenCalledWith(validFiles);
+					expect(handleUploadedFiles).toHaveBeenCalledWith(uploadResponse);
+				});
 			});
 		});
 	});
 
 	describe('upload a file on drop', () => {
 		it('should have the same behavior then when a user has clicked on the file input', () => {
-			uploader.validateFiles.mockReturnValueOnce({
+			uploader.validateFiles.mockReturnValue({
 				invalidFiles: [],
 				validFiles: [],
 			});
@@ -164,8 +181,8 @@ describe('<FileUploadZone/>', () => {
 	});
 
 	describe('custom handlers', () => {
-		it('Should not upload when autoUpload is false', () => {
-			uploader.validateFiles.mockReturnValueOnce({
+		it('Should not upload when autoUpload is false', async () => {
+			uploader.validateFiles.mockReturnValue({
 				invalidFiles: [],
 			});
 			const uploadFilesSpy = jest.spyOn(uploader, 'uploadFiles');
@@ -173,11 +190,14 @@ describe('<FileUploadZone/>', () => {
 				uploader,
 				autoUpload: false,
 			});
-			fireFileUpload(container, file);
-			expect(uploadFilesSpy).not.toHaveBeenCalled();
+
+			await waitFor(() => {
+				fireFileUpload(container, file);
+				expect(uploadFilesSpy).not.toHaveBeenCalled();
+			});
 		});
 
-		it('should call custom click handler when given', () => {
+		it('should call custom click handler when given', async () => {
 			const validateFilesSpy = jest.spyOn(uploader, 'validateFiles');
 			const onCustomClick = jest.fn();
 			const { container } = renderFileUploadZone({
@@ -185,17 +205,20 @@ describe('<FileUploadZone/>', () => {
 				onCustomClick,
 			});
 			const inputEl = container.querySelector('.m-upload__input');
-			fireEvent.click(inputEl);
-			expect(onCustomClick).toHaveBeenCalledTimes(1);
-			expect(validateFilesSpy).not.toHaveBeenCalled();
+
+			await waitFor(() => {
+				fireEvent.click(inputEl);
+				expect(onCustomClick).toHaveBeenCalledTimes(1);
+				expect(validateFilesSpy).not.toHaveBeenCalled();
+			});
 		});
 
 		it('should call custom drop handler when given', async () => {
-			uploader.validateFiles.mockReturnValueOnce({
+			uploader.validateFiles.mockReturnValue({
 				invalidFiles: [],
 				validFiles: [file],
 			});
-			uploader.uploadFiles.mockReturnValueOnce(of({
+			uploader.uploadFiles.mockReturnValue(of({
 				data: uploadResponse,
 			}));
 			const onCustomDrop = jest.fn();
@@ -203,9 +226,12 @@ describe('<FileUploadZone/>', () => {
 				uploader,
 				onCustomDrop,
 			});
-			await fireFileUploadOnDrop(container, file);
-			expect(onCustomDrop).toHaveBeenCalledTimes(1);
-			expect(onCustomDrop).toHaveBeenCalledWith([file]);
+
+			await waitFor(() => {
+				fireFileUploadOnDrop(container, file);
+				expect(onCustomDrop).toHaveBeenCalledTimes(1);
+				expect(onCustomDrop).toHaveBeenCalledWith([file]);
+			});
 		});
 	});
 

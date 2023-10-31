@@ -9,6 +9,10 @@ module.exports = {
 		'^.+\\.(css|less|scss)$': 'identity-obj-proxy',
 	},
 
+	transformIgnorePatterns: [
+		'node_modules/(?!react-dnd)/'
+	],
+
 	// https://jestjs.io/docs/configuration#testenvironment-string
 	testEnvironment: 'jest-environment-jsdom',
 };
