@@ -1,4 +1,4 @@
-import { Icon } from '@acpaas-ui/react-components';
+import { Icon } from '@redactie/react-components';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
@@ -53,7 +53,7 @@ const CharacterCount = ({
 	}
 
 	if ((!min && !max) || !count) {
-		return <></>;
+		return null;
 	}
 
 	return (

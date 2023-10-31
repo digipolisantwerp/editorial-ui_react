@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 
 import Tooltip from './Tooltip';
@@ -14,7 +15,7 @@ Some explanation about our Tooltip component
 
 ### Different variations
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Default">
 		{() => {
 			const buttonRef = useRef(null);
@@ -179,8 +180,8 @@ Some explanation about our Tooltip component
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Tooltip} />
+<ArgsTable of={Tooltip} />

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { action } from '@storybook/addon-actions'
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import { Observable } from 'rxjs';
 import FileUpload from './FileUpload';
@@ -16,175 +17,174 @@ A file upload component
 
 ## Preview of the component
 
-<Preview>
-	<Story name='Base'>
-		{() => {
-			const [files, setFiles] = useState([{
-				name: 'file 1',
-				id: 'file-1'
-			}, {
-				name: 'file 2',
-				id: 'file-2'
-			}])
-			return (
-				<FileUpload
-					id="my-upload"
-					options={{
-						allowedMimeTypes: ['image/jpeg'],
-						allowedFileTypes: ['jpg', 'png'],
-						maxFileSize: 5000000000000000,
-						url: 'api/upload',
-						fileLimit: 3,
-					}}
-					files={files}
-					removeFile={(id, index) => setFiles(files.filter(file => file.id === id))}
-					selectUploadedFiles={action()}
-				>
-					<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
-					<FileUploadDescription>Optional description message</FileUploadDescription>
-				</FileUpload>
-			)
-		}}
-	</Story>
-	<Story name='CustomUploader'>
-		{() => {
-			const [files, setFiles] = useState([{
-				name: 'file 1',
-				id: 'file-1'
-			}, {
-				name: 'file 2',
-				id: 'file-2'
-			}])
-			class CustomUploader {
-				options = UPLOAD_OPTIONS_DEFAULT;
-				constructor(options = {}) {
-					this.setOptions(options);
-				}
-				setOptions(options = {}) {
-					this.options = {
-						...this.options,
-						...options,
-					};
-				}
-				uploadFiles(files = []) {
-					const formData = this.filesToFormData(files);
-					return new Observable((observer) => {
-						const xhr = new XMLHttpRequest();
-						xhr.upload.addEventListener('progress', (e) => {
-							if (e.lengthComputable) {
-								const percentComplete = e.loaded / e.total;
-								observer.next({
-									progress: percentComplete,
-									data: null,
-								});
-							}
-						});
-						xhr.onload = () => {
-							observer.next({
-								progress: 1,
-								data: xhr.response,
-								status: xhr.status,
-							});
-							observer.complete();
-						};
-						xhr.responseType = 'json';
-						xhr.open('post', this.options.url);
-						if (this.options.requestHeader && this.options.requestHeader.key) {
-							xhr.setRequestHeader(this.options.requestHeader.key, this.options.requestHeader.value);
-						}
-						xhr.send(formData);
-					});
-				}
-				async validateFiles(files = []) {
-					return Promise.resolve(files.reduce((acc, file) => {
-						const errors = [];
-						if (!this.validateFileType(file)) {
-							errors.push('INVALID_FILE_TYPE');
-						}
-						if (!this.validateFileSize(file)) {
-							errors.push('INVALID_FILE_SIZE');
-						}
-						if (!this.validateMimeType(file)) {
-							errors.push('INVALID_MIME_TYPE');
-						}
-						if (errors.length === 0) {
-							acc.validFiles.push(file);
-						} else {
-							acc.invalidFiles.push({
-								reasons: errors,
-								file,
-							});
-						}
-						return acc;
-					}, {
-						validFiles: [],
-						invalidFiles: [],
-					}))
-				}
-				filesToFormData(files = []) {
-					const formData = new FormData();
-					if (!this.options.url || this.options.url === '') {
-						throw new Error('Define the upload url.');
-					}
-					files.forEach((file) => {
-						formData.append('file', file);
-						formData.append('name', 'test');
-						formData.append('description', 'description');
-						formData.append('copyright', 'copyright');
-						formData.append('category', 'file');
-						formData.append('editor', 'some editor');
-					});
-					return formData;
-				}
-				validateFileType(file) {
-					const { allowedFileTypes } = this.options;
-					const ext = CustomUploader.getFileExtension(file);
-					if (!Array.isArray(allowedFileTypes) || allowedFileTypes.length === 0) {
-						return true;
-					}
-					const toUpper = (x) => x.toUpperCase();
-					const allowedFileTypesToUpper = allowedFileTypes.map(toUpper);
-					return allowedFileTypesToUpper.lastIndexOf(ext.toUpperCase()) !== -1;
-				}
-				 validateFileSize(file) {
-					const { maxFileSize } = this.options;
-					if (!maxFileSize || maxFileSize === 0) {
-						return true;
-					}
-					return maxFileSize > file.size;
-				}
-				validateMimeType(file) {
-					const { allowedMimeTypes } = this.options;
-					if (!Array.isArray(allowedMimeTypes) || allowedMimeTypes.length === 0) {
-						return true;
-					}
-					return allowedMimeTypes.lastIndexOf(file.type) !== -1;
-				}
-				static getFileExtension(file) {
-					return file.name.split('.')[file.name.split('.').length - 1];
-				}
+<Story name='Base'>
+	{() => {
+		const [files, setFiles] = useState([{
+			name: 'file 1',
+			id: 'file-1'
+		}, {
+			name: 'file 2',
+			id: 'file-2'
+		}])
+		return (
+			<FileUpload
+				id="my-upload"
+				options={{
+					allowedMimeTypes: ['image/jpeg'],
+					allowedFileTypes: ['jpg', 'png'],
+					maxFileSize: 5000000000000000,
+					url: 'api/upload',
+					fileLimit: 3,
+				}}
+				files={files}
+				removeFile={(id, index) => setFiles(files.filter(file => file.id === id))}
+				selectUploadedFiles={action()}
+			>
+				<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
+				<FileUploadDescription>Optional description message</FileUploadDescription>
+			</FileUpload>
+		)
+	}}
+</Story>
+
+<Story name='CustomUploader'>
+	{() => {
+		const [files, setFiles] = useState([{
+			name: 'file 1',
+			id: 'file-1'
+		}, {
+			name: 'file 2',
+			id: 'file-2'
+		}])
+		class CustomUploader {
+			constructor(options = {}) {
+				this.setOptions(options);
 			}
-			const uploader = useMemo(() => new CustomUploader());
-			const handleInvalidFiles = () => { console.log('invalid files'); }
-			const handleCustomUpload = (files) => { console.log('custom upload', files); }
-			const handleCustomDrop = (files) => { console.log('custom drop', files); }
-			return (
-				<FileUploadZone
-					autoUpload={false}
-					id="test"
-					uploader={uploader}
-					invalidFiles={handleInvalidFiles}
-					onCustomClick={handleCustomUpload}
-					onCustomDrop={handleCustomDrop}
-				>
-					<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
-					<FileUploadDescription>Optional description message</FileUploadDescription>
-				</FileUploadZone>
-			)
-		}}
-	</Story>
-</Preview>
+			setOptions(options = {}) {
+				this.options = {
+					...this.options,
+					...UPLOAD_OPTIONS_DEFAULT,
+				};
+			}
+			uploadFiles(files = []) {
+				const formData = this.filesToFormData(files);
+				return new Observable((observer) => {
+					const xhr = new XMLHttpRequest();
+					xhr.upload.addEventListener('progress', (e) => {
+						if (e.lengthComputable) {
+							const percentComplete = e.loaded / e.total;
+							observer.next({
+								progress: percentComplete,
+								data: null,
+							});
+						}
+					});
+					xhr.onload = () => {
+						observer.next({
+							progress: 1,
+							data: xhr.response,
+							status: xhr.status,
+						});
+						observer.complete();
+					};
+					xhr.responseType = 'json';
+					xhr.open('post', this.options.url);
+					if (this.options.requestHeader && this.options.requestHeader.key) {
+						xhr.setRequestHeader(this.options.requestHeader.key, this.options.requestHeader.value);
+					}
+					xhr.send(formData);
+				});
+			}
+			async validateFiles(files = []) {
+				return Promise.resolve(files.reduce((acc, file) => {
+					const errors = [];
+					if (!this.validateFileType(file)) {
+						errors.push('INVALID_FILE_TYPE');
+					}
+					if (!this.validateFileSize(file)) {
+						errors.push('INVALID_FILE_SIZE');
+					}
+					if (!this.validateMimeType(file)) {
+						errors.push('INVALID_MIME_TYPE');
+					}
+					if (errors.length === 0) {
+						acc.validFiles.push(file);
+					} else {
+						acc.invalidFiles.push({
+							reasons: errors,
+							file,
+						});
+					}
+					return acc;
+				}, {
+					validFiles: [],
+					invalidFiles: [],
+				}))
+			}
+			filesToFormData(files = []) {
+				const formData = new FormData();
+				if (!this.options.url || this.options.url === '') {
+					throw new Error('Define the upload url.');
+				}
+				files.forEach((file) => {
+					formData.append('file', file);
+					formData.append('name', 'test');
+					formData.append('description', 'description');
+					formData.append('copyright', 'copyright');
+					formData.append('category', 'file');
+					formData.append('editor', 'some editor');
+				});
+				return formData;
+			}
+			validateFileType(file) {
+				const { allowedFileTypes } = this.options;
+				const ext = CustomUploader.getFileExtension(file);
+				if (!Array.isArray(allowedFileTypes) || allowedFileTypes.length === 0) {
+					return true;
+				}
+				const toUpper = (x) => x.toUpperCase();
+				const allowedFileTypesToUpper = allowedFileTypes.map(toUpper);
+				return allowedFileTypesToUpper.lastIndexOf(ext.toUpperCase()) !== -1;
+			}
+				validateFileSize(file) {
+				const { maxFileSize } = this.options;
+				if (!maxFileSize || maxFileSize === 0) {
+					return true;
+				}
+				return maxFileSize > file.size;
+			}
+			validateMimeType(file) {
+				const { allowedMimeTypes } = this.options;
+				if (!Array.isArray(allowedMimeTypes) || allowedMimeTypes.length === 0) {
+					return true;
+				}
+				return allowedMimeTypes.lastIndexOf(file.type) !== -1;
+			}
+			static getFileExtension(file) {
+				return file.name.split('.')[file.name.split('.').length - 1];
+			}
+		}
+		const uploader = useMemo(() => new CustomUploader());
+		const handleInvalidFiles = () => { console.log('invalid files'); }
+		const handleCustomUpload = (files) => { console.log('custom upload', files); }
+		const handleCustomDrop = (files) => { console.log('custom drop', files); }
+		return (
+			<FileUploadZone
+				autoUpload={false}
+				id="test"
+				uploader={uploader}
+				invalidFiles={handleInvalidFiles}
+				onCustomClick={handleCustomUpload}
+				onCustomDrop={handleCustomDrop}
+			>
+				<FileUploadMessage>Drag your files here or click to upload</FileUploadMessage>
+				<FileUploadDescription>Optional description message</FileUploadDescription>
+			</FileUploadZone>
+		)
+	}}
+</Story>
+
 
 ## Props
 
-<Props of={FileUpload} />
+<ArgsTable of={FileUpload} />

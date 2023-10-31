@@ -71,8 +71,9 @@ const DndDragDroppable = ({
 
 	const [{ isDragging }, drag] = useDrag({
 		item: {
-			type: accept[0], id, index, level,
+			id, index, level,
 		},
+		type: accept[0],
 		collect: (monitor) => ({
 			isDragging: monitor.isDragging(),
 		}),

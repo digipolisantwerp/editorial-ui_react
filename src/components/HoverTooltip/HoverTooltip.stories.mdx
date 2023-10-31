@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import HoverTooltip from './HoverTooltip';
 
@@ -12,7 +13,7 @@ Some explanation about our HoverTooltip component
 
 ### Different variations
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Default">
 		<div>
 			<div style={{width: '200px'}}>
@@ -20,9 +21,9 @@ Some explanation about our HoverTooltip component
 			</div>
 		</div>
 	</Story>
-</Preview>
+</Canvas>
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Small">
 		<div>
 			<div style={{width: '200px'}}>
@@ -30,8 +31,8 @@ Some explanation about our HoverTooltip component
 			</div>
 		</div>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={HoverTooltip} />
+<ArgsTable of={HoverTooltip} />

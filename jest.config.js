@@ -1,8 +1,14 @@
 module.exports = {
-	setupFiles: ['./scripts/jest-setup.js'],
-	setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
-	testEnvironment: 'jest-environment-jsdom-sixteen',
+	setupFilesAfterEnv: ['<rootDir>/scripts/jest-setup.js'],
+
+	// Module file extensions for importing
+	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+
+	// ignore scss files
 	moduleNameMapper: {
 		'^.+\\.(css|less|scss)$': 'identity-obj-proxy',
 	},
+
+	// https://jestjs.io/docs/configuration#testenvironment-string
+	testEnvironment: 'jest-environment-jsdom',
 };

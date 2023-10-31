@@ -44,12 +44,14 @@ const renderFileUploadZone = (props, MessageComponent, DescriptionComponent) => 
 
 const fireFileUpload = (container, f) => {
 	const fileInput = container.querySelector('.m-upload__input');
-	fireEvent.change(fileInput,
+	fireEvent.change(
+		fileInput,
 		{
 			target: {
 				files: [f],
 			},
-		});
+		},
+	);
 };
 
 const fireFileUploadOnDrop = (container, f) => {

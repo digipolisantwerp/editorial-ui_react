@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import EllipsisWithTooltip from './EllipsisWithTooltip';
 
@@ -12,7 +13,7 @@ Some explanation about our EllipsisWithTooltip component
 
 ### Different variations
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Default">
 		<div>
 			<div style={{width: '200px'}}>
@@ -20,10 +21,10 @@ Some explanation about our EllipsisWithTooltip component
 			</div>
 		</div>
 	</Story>
-</Preview>
+</Canvas>
 
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Custom value">
 		<div>
 			<div style={{width: '200px'}}>
@@ -31,8 +32,8 @@ Some explanation about our EllipsisWithTooltip component
 			</div>
 		</div>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={EllipsisWithTooltip} />
+<ArgsTable of={EllipsisWithTooltip} />

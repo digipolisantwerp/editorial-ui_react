@@ -6,7 +6,7 @@ import { ControlledModalBody, ControlledModalFooter, ControlledModalHeader } fro
 
 const defaultProps = { show: true };
 
-const renderControlledModal = ({ children, ...rest } = {}, renderOptions) => render(
+const renderControlledModal = ({ children, ...rest } = {}, renderOptions = {}) => render(
 	<ControlledModal {...defaultProps} {...rest}>
 		{children || (
 			<>

@@ -1,4 +1,4 @@
-import { Tabs } from '@acpaas-ui/react-components';
+import { Tabs } from '@redactie/react-components';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, {

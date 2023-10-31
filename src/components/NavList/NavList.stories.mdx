@@ -1,4 +1,5 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import NavList from './NavList';
 import { MOCK_ITEMS, MOCK_ITEMS_ERROR } from './NavList.mock'
@@ -11,15 +12,15 @@ The nav list component can be used as a secondary navigation menu
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<NavList items={MOCK_ITEMS} />
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={NavList} />
+<ArgsTable of={NavList} />
 
 ## Variations
 
@@ -28,8 +29,8 @@ The nav list component can be used as a secondary navigation menu
 Useful for having views with forms to indicate errors.
 Set the item's `hasError` property to `true` to add the correct styling.
 
-<Preview>
+<Canvas>
 	<Story name='With error state'>
 		<NavList items={MOCK_ITEMS_ERROR} />
 	</Story>
-</Preview>
+</Canvas>

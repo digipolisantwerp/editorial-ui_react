@@ -33,8 +33,10 @@ const FileUploadZone = ({
 	const [, setHasDragOver] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [uploadingFiles, setUploadingFiles] = useState([]);
-	const accept = useMemo(() => allowedFileTypes.map((type) => `.${type}`).concat(allowedMimeTypes).join(','),
-		[allowedFileTypes, allowedMimeTypes]);
+	const accept = useMemo(
+		() => allowedFileTypes.map((type) => `.${type}`).concat(allowedMimeTypes).join(','),
+		[allowedFileTypes, allowedMimeTypes],
+	);
 
 	/**
 	 * Methods
@@ -152,53 +154,51 @@ const FileUploadZone = ({
 	});
 
 	return (
-		<>
-			<div className={classnames('m-upload', { 'is-disabled': disabled })}>
-				<div className="m-upload__inner">
-					<div className="m-upload__dropzone">
-						<input
-							ref={fileInput}
-							className="m-upload__input"
-							id={id}
-							type="file"
-							disabled={disabled}
-							aria-labelledby={ariaId}
-							multiple={multiple}
-							accept={accept}
-							onDragOver={handleDragOver}
-							onDragLeave={handleDragLeave}
-							onDrop={handleDrop}
-							onChange={updateFiles}
-							onClick={onCustomClick ? handleCustomClick : undefined}
-						/>
-						{ (!uploadProgress || uploadProgress === 0) && (
-							<div className="m-upload__content">
-								<p className="m-upload__message">
-									{ fileUploadMessageSlot && <>{fileUploadMessageSlot}</> }
-								</p>
-							</div>
-						) }
+		<div className={classnames('m-upload', { 'is-disabled': disabled })}>
+			<div className="m-upload__inner">
+				<div className="m-upload__dropzone">
+					<input
+						ref={fileInput}
+						className="m-upload__input"
+						id={id}
+						type="file"
+						disabled={disabled}
+						aria-labelledby={ariaId}
+						multiple={multiple}
+						accept={accept}
+						onDragOver={handleDragOver}
+						onDragLeave={handleDragLeave}
+						onDrop={handleDrop}
+						onChange={updateFiles}
+						onClick={onCustomClick ? handleCustomClick : undefined}
+					/>
+					{ (!uploadProgress || uploadProgress === 0) && (
+						<div className="m-upload__content">
+							<p className="m-upload__message">
+								{fileUploadMessageSlot}
+							</p>
+						</div>
+					) }
 
-						{ uploadProgress > 0 && (
-							<div className="m-upload__content">
-								<p className="m-upload__uploads u-text-bold u-margin-bottom-xs">
-									{renderUploadingFiles(uploadingFiles)}
-								</p>
-								<ProgressBar value={uploadProgress} max="100" />
-							</div>
-						) }
-					</div>
+					{ uploadProgress > 0 && (
+						<div className="m-upload__content">
+							<p className="m-upload__uploads u-text-bold u-margin-bottom-xs">
+								{renderUploadingFiles(uploadingFiles)}
+							</p>
+							<ProgressBar value={uploadProgress} max="100" />
+						</div>
+					) }
 				</div>
-
-				{
-					fileUploadDescriptionSlot && (
-						<small className="m-upload__description">
-							{fileUploadDescriptionSlot}
-						</small>
-					)
-				}
 			</div>
-		</>
+
+			{
+				fileUploadDescriptionSlot && (
+					<small className="m-upload__description">
+						{fileUploadDescriptionSlot}
+					</small>
+				)
+			}
+		</div>
 	);
 };
 
