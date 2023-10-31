@@ -21,10 +21,12 @@ export default {
 			plugins: [
 				autoprefixer(),
 			],
+			minimize: true,
 		}),
 		babel({
 			exclude: ['node_modules/**'],
-			babelHelpers: 'external',
+			babelHelpers: 'runtime',
+			configFile: './babel.config.js',
 		}),
 		terser(),
 	],
