@@ -20,20 +20,18 @@ const ProgressBar = ({
 	};
 
 	return (
-		<>
-			<div className="aui-progress-bar m-progress">
-				<div className="m-progress__inner">
-					<div
-						aria-valuemax={max}
-						aria-valuenow={value}
-						style={progressStyle()}
-						aria-valuemin="0"
-						className="m-progress__bar"
-						role="progressbar"
-					/>
-				</div>
+		<div className="aui-progress-bar m-progress">
+			<div className="m-progress__inner">
+				<div
+					aria-valuemax={max}
+					aria-valuenow={value}
+					style={progressStyle()}
+					aria-valuemin="0"
+					className="m-progress__bar"
+					role="progressbar"
+				/>
 			</div>
-		</>
+		</div>
 	);
 };
 

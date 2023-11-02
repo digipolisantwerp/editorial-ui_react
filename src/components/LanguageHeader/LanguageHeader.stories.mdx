@@ -1,5 +1,6 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { InputLabel, TextField, Textarea } from '@acpaas-ui/react-components';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
+import { InputLabel, TextField, Textarea } from '@redactie/react-components';
 import { Formik, Field } from 'formik';
 import { useState, useEffect } from 'react';
 import { LANGUAGE_HEADER_MOCK_LANGUAGES, LANGUAGE_HEADER_MOCK_TOOLTIP, INITIAL_VALUES_MOCK} from './LanguageHeader.mock';
@@ -14,7 +15,7 @@ The language header can be used as a language selector on top of a form.
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		{() => {
 			const languages = LANGUAGE_HEADER_MOCK_LANGUAGES;
@@ -54,8 +55,8 @@ The language header can be used as a language selector on top of a form.
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={LanguageHeader} />
+<ArgsTable of={LanguageHeader} />

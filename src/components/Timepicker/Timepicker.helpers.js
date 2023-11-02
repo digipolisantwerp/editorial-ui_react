@@ -26,9 +26,7 @@ const getTimeOption = (value, amount) => {
 	return { label, value: label };
 };
 
-export const generateTimeSelectOptions = (
-	amount, step, disabled = false,
-) => {
+export const generateTimeSelectOptions = (amount, step, disabled = false) => {
 	const a = [];
 	let b = 0;
 

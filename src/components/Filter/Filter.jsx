@@ -1,6 +1,6 @@
 import {
 	Accordion, AccordionTab, AccordionTabContent, AccordionTabHeader, Button, TagList, TagListItem,
-} from '@acpaas-ui/react-components';
+} from '@redactie/react-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -47,9 +47,7 @@ const Filter = ({
 							onClick={preventClosingAccordion}
 							onKeyPress={preventClosingAccordion}
 						>
-							{filterSlot ? (
-								<>{filterSlot}</>
-							) : (
+							{filterSlot || (
 								<p className="o-filter__form__text col-xs-12 col-sm">
 									{noFilterText}
 								</p>

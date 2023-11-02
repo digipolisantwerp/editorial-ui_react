@@ -18,5 +18,7 @@ export const dragAndDrop = (dragEl, dropEl) => {
 		fireEvent.dragEnter(dropEl);
 		fireEvent.dragOver(dropEl);
 		fireEvent.drop(dropEl);
+		fireEvent.dragLeave(dropEl);
+		fireEvent.dragEnd(dragEl);
 	});
 };

@@ -66,19 +66,23 @@ describe('<Tooltip/>', () => {
 		});
 	});
 
-	it('Should set a className when given', () => {
+	it('Should set a className when given', async () => {
 		const className = 'c-custom-tooltip';
 		const { queryByText } = renderButtonWithTooltip({ className, isVisible: true });
 
-		const tooltipNode = queryByText(tooltipText);
-		expect(tooltipNode).toHaveClass(className);
+		await waitFor(() => {
+			const tooltipNode = queryByText(tooltipText);
+			expect(tooltipNode).toHaveClass(className);
+		});
 	});
 
-	it('Should pass a ref to the tooltip element', () => {
+	it('Should pass a ref to the tooltip element', async() => {
 		const tooltipRef = jest.fn();
 		const { queryByText } = renderButtonWithTooltip({ tooltipRef, isVisible: true });
 
-		const tooltipNode = queryByText(tooltipText);
-		expect(tooltipRef).toHaveBeenLastCalledWith(tooltipNode);
+		await waitFor(() => {
+			const tooltipNode = queryByText(tooltipText);
+			expect(tooltipRef).toHaveBeenLastCalledWith(tooltipNode);
+		});
 	});
 });

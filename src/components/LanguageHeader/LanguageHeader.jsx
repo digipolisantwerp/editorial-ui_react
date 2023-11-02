@@ -1,4 +1,4 @@
-import { Icon } from '@acpaas-ui/react-components';
+import { Icon } from '@redactie/react-components';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { propOr } from 'ramda';
@@ -91,9 +91,10 @@ const LanguageHeader = ({
 				</div>
 			)}
 			<div className={cx('o-language-header__form-section')}>
-				<LanguageHeaderContext.Provider value={{
-					languages, activeLanguage, setErrors,
-				}}
+				<LanguageHeaderContext.Provider value={
+					// eslint-disable-next-line react/jsx-no-constructed-context-values
+					{ languages, activeLanguage, setErrors }
+				}
 				>
 					{children}
 				</LanguageHeaderContext.Provider>

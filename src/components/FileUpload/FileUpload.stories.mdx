@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { action } from '@storybook/addon-actions'
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import { Observable } from 'rxjs';
 import FileUpload from './FileUpload';
@@ -16,7 +17,7 @@ A file upload component
 
 ## Preview of the component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		{() => {
 			const [files, setFiles] = useState([{
@@ -46,6 +47,9 @@ A file upload component
 			)
 		}}
 	</Story>
+</Canvas>
+
+<Canvas>
 	<Story name='CustomUploader'>
 		{() => {
 			const [files, setFiles] = useState([{
@@ -56,14 +60,13 @@ A file upload component
 				id: 'file-2'
 			}])
 			class CustomUploader {
-				options = UPLOAD_OPTIONS_DEFAULT;
 				constructor(options = {}) {
 					this.setOptions(options);
 				}
 				setOptions(options = {}) {
 					this.options = {
 						...this.options,
-						...options,
+						...UPLOAD_OPTIONS_DEFAULT,
 					};
 				}
 				uploadFiles(files = []) {
@@ -146,7 +149,7 @@ A file upload component
 					const allowedFileTypesToUpper = allowedFileTypes.map(toUpper);
 					return allowedFileTypesToUpper.lastIndexOf(ext.toUpperCase()) !== -1;
 				}
-				 validateFileSize(file) {
+					validateFileSize(file) {
 					const { maxFileSize } = this.options;
 					if (!maxFileSize || maxFileSize === 0) {
 						return true;
@@ -183,8 +186,8 @@ A file upload component
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={FileUpload} />
+<ArgsTable of={FileUpload} />

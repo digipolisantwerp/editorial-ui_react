@@ -30,7 +30,7 @@ const Table = ({
 	rowClicked,
 	striped = true,
 	expandedRows,
-	type,
+	type = 'primary',
 	draggable = false,
 	loadDataMessage = 'Loading data...',
 	noColumnsMessage = 'No columns available.',
@@ -217,11 +217,9 @@ const Table = ({
 							</TableRow>
 						</thead>
 					)}
-					{
-						<tbody className="a-table__body">
-							{showLoader ? renderLoader() : rows.map((row, index) => renderTableRow(row, index))}
-						</tbody>
-					}
+					<tbody className="a-table__body">
+						{showLoader ? renderLoader() : rows.map((row, index) => renderTableRow(row, index))}
+					</tbody>
 				</table>
 			</div>
 		</DndContainer>

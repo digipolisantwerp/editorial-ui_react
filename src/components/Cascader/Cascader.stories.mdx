@@ -1,7 +1,8 @@
-import { useState  } from 'react';
-import { TextField, Button } from '@acpaas-ui/react-components';
+import { useState } from 'react';
+import { TextField, Button } from '@redactie/react-components';
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import Cascader from './Cascader';
 import { CASCADER_MOCK_CITY_OPTIONS, CASCADER_MOCK_LAZY_LOADED_CITY_OPTIONS } from './Cascader.mock';
@@ -14,7 +15,7 @@ Simple Cascader
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		{() => {
 			const [value, setValue] = useState(['belgium', 'antwerp', 'lier']);
@@ -30,11 +31,11 @@ Simple Cascader
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Cascader} />
+<ArgsTable of={Cascader} />
 
 ## Stories
 
@@ -42,7 +43,7 @@ Group stories based on props
 
 ### Lazy loading
 
-<Preview>
+<Canvas>
 	<Story name='Lazyloading'>
 		{() => {
 			const [value, setValue] = useState([]);
@@ -68,11 +69,11 @@ Group stories based on props
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Disabled
 
-<Preview>
+<Canvas>
 	<Story name='Disabled'>
 		{() => {
 			const [inputValue, setInputValue] = useState('');
@@ -83,11 +84,11 @@ Group stories based on props
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Change value on every select
 
-<Preview>
+<Canvas>
 	<Story name='Change on every select'>
 		{() => {
 			const [value, setValue] = useState(['belgium', 'antwerp', 'lier']);
@@ -115,4 +116,4 @@ Group stories based on props
 			)
 		}}
 	</Story>
-</Preview>
+</Canvas>

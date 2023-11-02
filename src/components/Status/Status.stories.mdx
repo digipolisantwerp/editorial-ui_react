@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 
 import {
@@ -17,7 +18,7 @@ Some explanation about our Status component
 
 ### Different variations
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="Active">
 		<Status
 			label={STATUS_MOCK_ACTIVE.label}
@@ -36,8 +37,8 @@ Some explanation about our Status component
 			type={STATUS_MOCK_ARCHIVED.type}
 		/>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Status} />
+<ArgsTable of={Status} />

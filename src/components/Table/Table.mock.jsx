@@ -1,4 +1,4 @@
-import { Button } from '@acpaas-ui/react-components';
+import { Button } from '@redactie/react-components';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 

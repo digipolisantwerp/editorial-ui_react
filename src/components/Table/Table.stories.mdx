@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 import { useState, useEffect, useCallback } from 'react';
 
 import Table from './Table';
@@ -20,15 +21,15 @@ Some explanation about our Table component
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<Table columns={TABLE_MOCK_COLUMNS()} rows={TABLE_MOCK_ROWS.slice(0, 5)}/>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Table} />
+<ArgsTable of={Table} />
 
 ## Stories
 
@@ -36,7 +37,7 @@ Group stories based on props
 
 ### Placeholder messages
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name='Loading'>
 		<Table loading columns={TABLE_MOCK_COLUMNS()} />
 	</Story>
@@ -46,11 +47,11 @@ Group stories based on props
 	<Story name='No data'>
 		<Table columns={TABLE_MOCK_COLUMNS()} className="u-margin-top" />
 	</Story>
-</Preview>
+</Canvas>
 
 ### Sortable columns
 
-<Preview>
+<Canvas>
 	<Story name='Sortable'>
 		{() => {
 			const [sorting, setSorting] = useState({ key: 'id', order: 'asc' });
@@ -78,11 +79,11 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Expandeble rows
 
-<Preview>
+<Canvas>
 	<Story name='Expandable'>
 		{() => {
 			const [expandedRows, setExpandedRows] = useState({});
@@ -107,11 +108,11 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Nested rows
 
-<Preview>
+<Canvas>
 	<Story name='Nested'>
 		{() => {
 			return (
@@ -122,9 +123,9 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
-<Preview>
+<Canvas>
 	<Story name='Expandable nested'>
 		{() => {
 			const [expandedRows, setExpandedRows] = useState({});
@@ -152,11 +153,11 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Draggable rows
 
-<Preview>
+<Canvas>
 	<Story name='Draggable'>
 		{() => {
 			const [rows, setRows] = useState(TABLE_MOCK_ROWS);
@@ -178,9 +179,9 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
-<Preview>
+<Canvas>
 	<Story name='Draggable nested'>
 		{() => {
 			const [rows, setRows] = useState(TABLE_MOCK_NESTED_ROWS);
@@ -232,11 +233,11 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ### Styles
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name='No stripes'>
 		<Table columns={TABLE_MOCK_COLUMNS()} rows={TABLE_MOCK_ROWS.slice(0, 4)} striped={false} />
 	</Story>
@@ -246,9 +247,9 @@ Group stories based on props
 	<Story name='Secondary head'>
 		<Table columns={TABLE_MOCK_COLUMNS()} rows={TABLE_MOCK_ROWS.slice(0, 2)} type="secondary" />
 	</Story>
-</Preview>
+</Canvas>
 
-<Preview>
+<Canvas>
 	<Story name='Styled rows'>
 		{() => {
 			return (
@@ -260,4 +261,4 @@ Group stories based on props
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React, { useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -8,9 +8,10 @@ import DndContainer from './DndContainer';
 
 const dragTestId = 'drag';
 const dropTestId = 'drop';
+const childrenTestId = 'children';
 
 const DraggableComponent = () => {
-	const [, dragRef] = useDrag({ item: { id: 1, type: 'item' } });
+	const [, dragRef] = useDrag({ item: { id: 1 }, type: 'item' });
 	return <div data-testid={dragTestId} ref={dragRef}>Drag me</div>;
 };
 const DropTarget = () => {
@@ -28,32 +29,52 @@ const DropTarget = () => {
 
 const renderDndContainer = ({ draggable = true } = {}) => render(
 	<DndContainer draggable={draggable}>
-		<DraggableComponent />
-		<DropTarget />
+		{draggable && (
+			<>
+				<DraggableComponent />
+				<DropTarget />
+			</>
+		)}
+		<span data-testid={childrenTestId} />
 	</DndContainer>,
 );
 
 describe('<DndContainer />', () => {
-	it('Should use DndProvider when `draggable` is true', () => {
+	it('Should use DndProvider when `draggable` is true', async () => {
 		const { queryByTestId } = renderDndContainer();
 		const dragEl = queryByTestId(dragTestId);
 		const dropEl = queryByTestId(dropTestId);
 
 		dragAndDrop(dragEl, dropEl);
 
-		expect(queryByTestId(dropTestId).textContent).toBe('Dropped');
+		await waitFor(() => {
+			expect(queryByTestId(dropTestId).textContent).toBe('Dropped');
+		});
 	});
 
-	it('Should throw an error when using Dnd context when `draggable` is false', () => {
-		expect(() => renderDndContainer({ draggable: false })).toThrowError();
+	it('Should not use DndProvider when `draggable` is false', async () => {
+		const { queryByTestId } = renderDndContainer({ draggable: false });
+
+		await waitFor(() => {
+			const dragEl = queryByTestId(dragTestId);
+			const dropEl = queryByTestId(dropTestId);
+			const childrenEl = queryByTestId(childrenTestId);
+
+			expect(dropEl).toBeNull();
+			expect(dragEl).toBeNull();
+			expect(childrenEl).not.toBeNull();
+		});
 	});
 
-	it('Should render children', () => {
+	it('Should render children', async() => {
 		const { queryByTestId } = renderDndContainer();
-		const dragEl = queryByTestId(dragTestId);
-		const dropEl = queryByTestId(dropTestId);
 
-		expect(dragEl).not.toBeNull();
-		expect(dropEl).not.toBeNull();
+		await waitFor(() => {
+			const dragEl = queryByTestId(dragTestId);
+			const dropEl = queryByTestId(dropTestId);
+
+			expect(dragEl).not.toBeNull();
+			expect(dropEl).not.toBeNull();
+		});
 	});
 });

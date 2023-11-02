@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import { Icon } from '@acpaas-ui/react-components';
+import { Icon } from '@redactie/react-components';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,9 +8,7 @@ import styles from './MultilanguageField.module.scss';
 
 const cx = classNames.bind(styles);
 
-const FormField = ({ asComponent, ...props }) => React.createElement(
-	asComponent, props,
-);
+const FormField = ({ asComponent, ...props }) => React.createElement(asComponent, props);
 
 const MultilanguageField = ({ asComponent, multiLang = true, ...props }) => (
 	<div className={multiLang && cx('u-bg-light', 'o-multilanguage-field')}>
