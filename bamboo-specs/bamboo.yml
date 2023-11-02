@@ -32,9 +32,8 @@ Build:
           cd app
           echo "Starting publish script..."
           echo "NPM version"
-          export NODE_OPTIONS=--openssl-legacy-provider
           npm --version
-          npm i --legacy-peer-deps
+          npm i
           TOKEN=$(curl -s \
           -H "Accept: application/json" \
           -H "Content-Type:application/json" \
