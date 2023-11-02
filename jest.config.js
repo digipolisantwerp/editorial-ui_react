@@ -1,5 +1,5 @@
 module.exports = {
-	setupFilesAfterEnv: ['<rootDir>/scripts/jest-setup.js'],
+	setupFilesAfterEnv: ['<rootDir>/test/setupJest.js'],
 
 	// Module file extensions for importing
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
