@@ -28,7 +28,15 @@ export default {
 			babelHelpers: 'runtime',
 			configFile: './babel.config.js',
 		}),
-		terser(),
+		terser({
+			ecma: 2015,
+			// Added for profiling in devtools
+			keep_classnames: true,
+			keep_fnames: true,
+			output: {
+				comments: false,
+			},
+		}),
 	],
 	external: [
 		'@acpaas-ui/react-components',
