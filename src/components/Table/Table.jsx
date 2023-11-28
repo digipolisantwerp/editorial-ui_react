@@ -282,7 +282,7 @@ Table.propTypes = {
 	rowExpansionTemplate: PropTypes.func,
 	draggable: PropTypes.bool,
 	striped: PropTypes.bool,
-	type: PropTypes.oneOf(['primary', 'secondary']),
+	type: PropTypes.oneOf(['primary', 'secondary', 'transparent']),
 	moveRow: PropTypes.func,
 	allowHorizontalDrag: PropTypes.bool,
 	nestedLoadingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
