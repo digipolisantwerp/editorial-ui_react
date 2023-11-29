@@ -30,7 +30,7 @@ const Table = ({
 	rowClicked,
 	striped = true,
 	expandedRows,
-	type = 'primary',
+	type = 'transparent',
 	draggable = false,
 	loadDataMessage = 'Loading data...',
 	noColumnsMessage = 'No columns available.',
