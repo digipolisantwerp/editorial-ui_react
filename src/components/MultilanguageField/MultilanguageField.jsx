@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 const FormField = ({ asComponent, ...props }) => React.createElement(asComponent, props);
 
 const MultilanguageField = ({ asComponent, multiLang = true, ...props }) => (
-	<div className={multiLang && cx('u-bg-light', 'o-multilanguage-field')}>
+	<div className={multiLang ? cx('u-bg-light', 'o-multilanguage-field') : ''}>
 		{multiLang && <Icon name="globe" className={cx('o-multilanguage-field__icon')} />}
 		<FormField asComponent={asComponent} {...props} />
 	</div>
