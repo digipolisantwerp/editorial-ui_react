@@ -182,10 +182,6 @@ Menus.propTypes = {
 	 * Callback when selecting an option
 	 */
 	onSelect: PropTypes.func,
-	/**
-	 * Render as multi-select
-	 */
-	// multipleSelect: PropTypes.bool,
 };
 
 export default Menus;
