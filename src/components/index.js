@@ -19,3 +19,4 @@ export * from './LanguageHeader';
 export * from './MultilanguageField';
 export * from './HoverTooltip';
 export * from './CharacterCount';
+export * from './TaggableInput';
