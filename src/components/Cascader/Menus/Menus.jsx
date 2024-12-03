@@ -1,4 +1,5 @@
 import { Spinner } from '@redactie/react-components';
+import arrayTreeFilter from 'array-tree-filter';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -12,27 +13,63 @@ const Menus = ({
 	const menuClass = `${prefixCls}-menu m-flyout__content`;
 
 	/**
+	 * Hooks
+	 */
+
+	const [visualPath, setVisualPath] = React.useState([]);
+
+	/**
 	 * Functions
 	 */
 
 	const isActiveOption = (menuValue, menuOption, menuIndex) => menuValue[menuIndex]
 		=== menuOption.value;
+	const isVisualOption = (menuOption, menuIndex) => visualPath[menuIndex]
+		&& visualPath[menuIndex].value === menuOption.value;
 
-	const handleSelect = (option, menuIndex, e) => {
+	const handleSelect = (path, option, menuIndex, e) => {
 		// Prevent selecting the parent element because of nested lists
 		e.stopPropagation();
-		onSelect(option, menuIndex, e);
+		onSelect(path, option, menuIndex, e);
+	};
+
+	const openPath = (path, selectedOption, e) => {
+		// Prevent hitting select
+		e.stopPropagation();
+
+		const activeOptions = arrayTreeFilter(
+			options,
+			(option, level) => option.value === path[level],
+		);
+
+		setVisualPath([...activeOptions, selectedOption]);
 	};
 
 	/**
 	 * Render
 	 */
 
-	const renderExpandIconNode = (hasChildren, isNoLeaf, isLoading) => {
-		if ((!hasChildren && !isNoLeaf) || isLoading) {
+	const renderExpandIconNode = (
+		path,
+		option,
+		hasChildren,
+	) => {
+		if ((!hasChildren && option.isLeaf !== false) || option.loading) {
 			return null;
 		}
-		return <span className={`${prefixCls}-menu-item-expand-icon fa fa-angle-right`} />;
+		return (
+			<span
+				className={`${prefixCls}-menu-item-expand-icon`}
+				title={option.label}
+				aria-label={option.label}
+				role="button"
+				tabIndex={0}
+				onClick={(e) => openPath([...path], option, e)}
+				onKeyDown={(e) => openPath([...path], option, e)}
+			>
+				<span className={`${prefixCls}-menu-item-expand-icon-icon fa fa-angle-right`} />
+			</span>
+		);
 	};
 
 	const renderLoadingIconNode = (isLoading) => {
@@ -42,11 +79,15 @@ const Menus = ({
 		return <Spinner className="u-margin-left-xs" size="small" />;
 	};
 
-	const renderOption = (menuValue, option, menuIndex) => {
+	const renderCheckbox = () => null;
+	const renderLabel = (label) => <span className="u-text-truncate">{label}</span>;
+
+	const renderOption = (menuValue, option, menuIndex, path = []) => {
 		const hasChildren = Array.isArray(option.children) && option.children.length > 0;
 		const isNoLeaf = option.isLeaf === false;
 		const isLoading = option.loading;
 		const isActive = isActiveOption(menuValue, option, menuIndex);
+		const isVisual = isVisualOption(option, menuIndex);
 		const menuItemCls = classnames(`${prefixCls}-menu-item`, {
 			[`${prefixCls}-menu-item--active`]: isActive,
 			[`${prefixCls}-menu-item--disabled`]: option.disabled,
@@ -58,17 +99,26 @@ const Menus = ({
 				className={menuItemCls}
 				title={option.label}
 				role="menuitem"
-				onClick={(e) => handleSelect(option, menuIndex, e)}
-				onKeyDown={(e) => handleSelect(option, menuIndex, e)}
+				onClick={(e) => handleSelect(path, option, menuIndex, e)}
+				onKeyDown={(e) => handleSelect(path, option, menuIndex, e)}
 			>
-				<span className={`${prefixCls}-menu-item__label`}>
-					<span className="u-text-truncate">{option.label}</span>
-					{renderExpandIconNode(hasChildren, isNoLeaf, isLoading)}
+				<span
+					className={`${prefixCls}-menu-item__label`}
+					onMouseEnter={(e) => openPath([...path], option, e)}
+				>
+					{renderCheckbox(option, menuIndex)}
+					{renderLabel(option.label)}
+					{renderExpandIconNode(path, option, hasChildren)}
 					{renderLoadingIconNode(isLoading)}
 				</span>
-				{(hasChildren || isNoLeaf) && isActive && (
+				{(hasChildren || isNoLeaf) && isVisual && (
 					<ul className={menuClass}>
-						{option.children.map((child) => renderOption(menuValue, child, menuIndex + 1))}
+						{option.children.map((child) => renderOption(
+							menuValue,
+							child,
+							menuIndex + 1,
+							[...path, option.value],
+						))}
 					</ul>
 				)}
 			</li>

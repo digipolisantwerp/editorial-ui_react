@@ -1,0 +1,36 @@
+@import '~@a-ui/core/dist/assets/styles/quarks';
+
+.m-taggable-input {
+	border: 1px solid $border-color;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	.m-taggable-list {
+		.o-tag-list {
+			margin-bottom: 0;
+
+			.m-tag {
+				&:not(.has-input) {
+					margin: $spacer-xs / 2 0 0 $spacer-xs / 2;
+				}
+
+				&.has-input {
+					height: auto;
+					flex-grow: 1;
+				}
+			}
+		}
+	}
+
+	.m-taggable-child {
+		flex-grow: 1;
+
+		input, select {
+			flex-grow: 1;
+			border: none !important;
+			padding-left: $spacer-xs;
+			box-shadow: none !important;
+		}
+	}
+}
