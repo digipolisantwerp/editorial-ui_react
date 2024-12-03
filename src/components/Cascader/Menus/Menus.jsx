@@ -34,7 +34,6 @@ const Menus = ({
 	};
 
 	const openPath = (path, selectedOption, e) => {
-		console.log('openPath', path, selectedOption);
 		// Prevent hitting select
 		e.stopPropagation();
 
