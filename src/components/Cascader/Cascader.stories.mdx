@@ -6,6 +6,7 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
 
 import Cascader from './Cascader';
 import { CASCADER_MOCK_CITY_OPTIONS, CASCADER_MOCK_LAZY_LOADED_CITY_OPTIONS } from './Cascader.mock';
+import { TaggableInput } from '../TaggableInput';
 
 <Meta title="Cascader" component={Cascader} />
 
@@ -94,14 +95,14 @@ Group stories based on props
 			const [value, setValue] = useState(['belgium', 'antwerp', 'lier']);
 			const [inputValue, setInputValue] = useState('Belgium > Antwerp > Lier');
 			const handleOnChange = (value, selectedOptions) => {
-				setInputValue(selectedOptions.map(o => o.label).join(' > '))
+				setInputValue((selectedOptions || []).map(o => o.label).join(' > '))
 				setValue(value);
 			};
 			return (
 				<Cascader changeOnSelect value={value} options={CASCADER_MOCK_CITY_OPTIONS} onChange={handleOnChange}>
 					<div className="a-input has-icon-right">
 						<div className="a-input__wrapper">
-							<input onChange={() => null} placeholder="Please select a city" value={inputValue}  />
+							<input onChange={() => null} autoComplete='off' placeholder="Please select a city" value={inputValue}  />
 							<span style={{"pointerEvents": "initial"}} className="fa">
 								<Button onClick={(e) => {
 									e.preventDefault();
@@ -111,6 +112,61 @@ Group stories based on props
 								}} icon="times-circle" ariaLabel="Verwijder" transparent />
 							</span>
 						</div>
+					</div>
+				</Cascader>
+			)
+		}}
+	</Story>
+</Canvas>
+
+### Multi-select
+
+<Canvas>
+	<Story name='Multi-select'>
+		{() => {
+			const [value, setValue] = useState([]);
+			const [inputValue, setInputValue] = useState('');
+			const [tags, setTags] = useState([]);
+			const handleOnChange = (value, selectedOptions) => {
+				setInputValue('');
+
+				if (
+					Array.isArray(selectedOptions)
+					&& selectedOptions.length > 0
+					&& !tags.find(t => t.value === selectedOptions[selectedOptions.length - 1].value)
+				) {
+					const newTags = [...tags, selectedOptions[selectedOptions.length - 1]];
+					setValue(newTags.map(t => t.value));
+					setTags(newTags);
+				}
+			};
+			const handleUnselect = (e) => {
+				e.stopPropagation();
+				setTags(tags.filter(t => t.value !== e.target.value.value));
+			};
+			return (
+				<Cascader
+					value={[]}
+					options={CASCADER_MOCK_CITY_OPTIONS}
+					onChange={handleOnChange}
+					changeOnSelect
+					multipleSelect
+				>
+					<div className="a-input has-icon-right">
+						<TaggableInput tags={tags} onClose={(e) => handleUnselect(e)}>
+							<div className="a-input__wrapper">
+								<input onChange={() => null} autoComplete='off' placeholder="Please select a city" value={inputValue} />
+								<span style={{"pointerEvents": "initial"}} className="fa">
+									<Button onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										setValue([]);
+										setInputValue('');
+										setTags([]);
+									}} icon="times-circle" ariaLabel="Verwijder" transparent />
+								</span>
+							</div>
+						</TaggableInput>
 					</div>
 				</Cascader>
 			)

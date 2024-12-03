@@ -1,7 +1,9 @@
 import arrayTreeFilter from 'array-tree-filter';
 import PropTypes from 'prop-types';
 import Trigger from 'rc-trigger';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+	useEffect, useRef, useState,
+} from 'react';
 
 import { KEY_CODE } from '../../const';
 
@@ -19,6 +21,7 @@ const Cascader = ({
 	prefixCls = 'o-cascader',
 	onChange = () => null,
 	loadData = () => null,
+	multipleSelect = false,
 }) => {
 	const [popupVisible, setPopupVisible] = useState(false);
 	const [activeValue, setActiveValue] = useState(defaultValue ?? []);
@@ -36,6 +39,7 @@ const Cascader = ({
 	/**
 	 * Functions
 	 */
+
 	const getActiveOptions = (cascadeOptions = [], cascadeActiveValue = []) => arrayTreeFilter(
 		cascadeOptions,
 		(option, level) => option.value === cascadeActiveValue[level],
@@ -70,12 +74,14 @@ const Cascader = ({
 	const handleChange = (activeOptions, visible, e) => {
 		if (e.type !== 'keydown' || e.keyCode === KEY_CODE.ENTER) {
 			onChange(activeOptions.map((activeOption) => activeOption.value), activeOptions);
-			setPopupVisible(visible);
 		}
+
+		setPopupVisible(multipleSelect ? false : visible);
 	};
 
-	const handleMenuSelect = (targetOption, menuLevel, e) => {
+	const handleMenuSelect = (parentPath, targetOption, menuLevel, e) => {
 		const triggerNode = triggerEl.current.getRootDomNode();
+
 		if (triggerNode && triggerNode.focus && !targetOption.children) {
 			triggerNode.focus();
 		}
@@ -86,7 +92,7 @@ const Cascader = ({
 
 		const newActiveValue = activeValue.slice(0, menuLevel + 1);
 		newActiveValue[menuLevel] = targetOption.value;
-		const activeOptions = getActiveOptions(options, newActiveValue);
+		const activeOptions = getActiveOptions(options, [...parentPath, targetOption.value]);
 
 		/**
 		 * When the targetOption is not a leaf and it has no children
@@ -98,6 +104,7 @@ const Cascader = ({
 			if (changeOnSelect) {
 				handleChange(activeOptions, true, e);
 			}
+
 			setActiveValue(newActiveValue);
 			loadData(activeOptions, menuLevel);
 			return;
@@ -115,6 +122,7 @@ const Cascader = ({
 			// handle change on every select
 			handleChange(activeOptions, true, e);
 		}
+
 		setActiveValue(newActiveValue);
 	};
 
@@ -194,6 +202,7 @@ const Cascader = ({
 				value={activeValue}
 				onSelect={handleMenuSelect}
 				options={options}
+				multipleSelect={multipleSelect}
 			/>
 		);
 	};
@@ -290,7 +299,14 @@ Cascader.propTypes = {
 	 * Selecting an option is not possible when disabled
 	 */
 	disabled: PropTypes.bool,
+	/**
+	 * Children to load into Cascader
+	 */
 	children: PropTypes.element,
+	/**
+	 * Enable multiple select
+	 */
+	multipleSelect: PropTypes.bool,
 };
 
 export default Cascader;
