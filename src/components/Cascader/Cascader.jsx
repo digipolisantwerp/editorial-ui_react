@@ -202,7 +202,6 @@ const Cascader = ({
 				value={activeValue}
 				onSelect={handleMenuSelect}
 				options={options}
-				multipleSelect={multipleSelect}
 			/>
 		);
 	};
