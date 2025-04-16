@@ -5,8 +5,9 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
 
 
 import Cascader from './Cascader';
-import { CASCADER_MOCK_CITY_OPTIONS, CASCADER_MOCK_LAZY_LOADED_CITY_OPTIONS } from './Cascader.mock';
+import { CASCADER_MOCK_CITY_OPTIONS, CASCADER_MOCK_LAZY_LOADED_CITY_OPTIONS, CASCADER_MOCK_CITY_OPTIONS_STYLING_TEST } from './Cascader.mock';
 import { TaggableInput } from '../TaggableInput';
+import './Cascader.stories.scss'
 
 <Meta title="Cascader" component={Cascader} />
 
@@ -173,3 +174,27 @@ Group stories based on props
 		}}
 	</Story>
 </Canvas>
+
+## Preview of component
+
+<Canvas>
+	<Story name='ClassNames'>
+		{() => {
+			const [value, setValue] = useState(['belgium', 'antwerp', 'lier']);
+			const [inputValue, setInputValue] = useState('');
+			const handleOnChange = (value, selectedOptions) => {
+				setInputValue(selectedOptions.map(o => o.label).join(' > '))
+				setValue(value);
+			};
+			return (
+				<Cascader value={value} options={CASCADER_MOCK_CITY_OPTIONS_STYLING_TEST} onChange={handleOnChange}>
+					<TextField onChange={() => null} placeholder="Please select a city" value={inputValue} />
+				</Cascader>
+			)
+		}}
+	</Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={Cascader} />
