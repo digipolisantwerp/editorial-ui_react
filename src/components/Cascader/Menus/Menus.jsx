@@ -88,7 +88,7 @@ const Menus = ({
 		const isLoading = option.loading;
 		const isActive = isActiveOption(menuValue, option, menuIndex);
 		const isVisual = isVisualOption(option, menuIndex);
-		const menuItemCls = classnames(`${prefixCls}-menu-item`, {
+		const menuItemCls = classnames(`${prefixCls}-menu-item`, option.className, {
 			[`${prefixCls}-menu-item--active`]: isActive,
 			[`${prefixCls}-menu-item--disabled`]: option.disabled,
 			[`${prefixCls}-menu-item--loading`]: isLoading,
