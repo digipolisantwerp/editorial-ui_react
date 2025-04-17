@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import ProgressBar from './ProgressBar';
 
@@ -11,10 +12,10 @@ A progress bar component
 
 ## Preview of the component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<ProgressBar max="100" value="50" />
 	</Story>
-</Preview>
+</Canvas>
 
-<Props of={ProgressBar} />
+<ArgsTable of={ProgressBar} />

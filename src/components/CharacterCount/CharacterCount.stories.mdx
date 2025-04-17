@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import CharacterCount from './CharacterCount';
 
@@ -12,7 +13,7 @@ A vertically scrollable tab bar
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<CharacterCount count={15} min={10} max={20} />
 	</Story>
@@ -28,8 +29,8 @@ A vertically scrollable tab bar
 	<Story name='Count invalid'>
 		<CharacterCount count={150} min={10} max={20} />
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={CharacterCount} />
+<ArgsTable of={CharacterCount} />

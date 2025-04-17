@@ -1,4 +1,4 @@
-import { Label } from '@acpaas-ui/react-components';
+import { Label } from '@redactie/react-components';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';

@@ -29,9 +29,7 @@ const TableCell = ({
 				{component ? component(value, rowData, rowIndex) : value}
 			</EllipsisWithTooltip>
 		) : (
-			<>
-				{component ? component(value, rowData, rowIndex) : value}
-			</>
+			component ? component(value, rowData, rowIndex) : value
 		)}
 	</HTMLTag>
 );

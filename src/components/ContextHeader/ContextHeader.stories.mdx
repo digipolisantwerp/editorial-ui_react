@@ -1,5 +1,6 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { Button, Breadcrumbs } from '@acpaas-ui/react-components';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
+import { Button, Breadcrumbs } from '@redactie/react-components';
 
 import {
 	CONTEXT_HEADER_MOCK_BADGES,
@@ -18,7 +19,7 @@ The context header can be used as a secondary header.
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<ContextHeader tabs={CONTEXT_HEADER_MOCK_TABS} badges={CONTEXT_HEADER_MOCK_BADGES} title={CONTEXT_HEADER_MOCK_TITLE} language="nl">
 			<ContextHeaderTopSection>
@@ -32,17 +33,17 @@ The context header can be used as a secondary header.
 			</ContextHeaderLabelSection>
 		</ContextHeader>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={ContextHeader} />
+<ArgsTable of={ContextHeader} />
 
 ## Stories
 
 ### Different variations
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="title">
 		<ContextHeader title={CONTEXT_HEADER_MOCK_TITLE} />
 	</Story>
@@ -66,11 +67,11 @@ The context header can be used as a secondary header.
 			</ContextHeaderLabelSection>
 		</ContextHeader>
 	</Story>
-</Preview>
+</Canvas>
 
 ### Slots
 
-<Preview isColumn>
+<Canvas isColumn>
 	<Story name="top section">
 		<ContextHeader title={CONTEXT_HEADER_MOCK_TITLE}>
 			<ContextHeaderTopSection>
@@ -92,4 +93,4 @@ The context header can be used as a secondary header.
 			</ContextHeaderLabelSection>
 		</ContextHeader>
 	</Story>
-</Preview>
+</Canvas>

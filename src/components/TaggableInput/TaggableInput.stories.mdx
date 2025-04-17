@@ -1,0 +1,47 @@
+import { useState } from 'react';
+import { Select } from '@redactie/react-components';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
+import TaggableInput from './TaggableInput';
+
+<Meta title="TaggableInput" component={TaggableInput} />
+
+# TaggableInput
+
+Wrapper for any imput that wants to set multiple values through tags
+
+## Preview of component
+
+<Canvas>
+	<Story name='Base'>
+		{() => {
+			const options = [
+				{ value: '', label: 'Selecteer een tag'},
+				{ value: 'tag1', label: 'tag1' },
+				{ value: 'tag2', label: 'tag2' },
+				{ value: 'tag3', label: 'tag3' },
+			];
+			const [value, setValue] = useState(['tag1', 'tag2']);
+			const [tags, setTags] = useState(options.slice(1, 3));
+			const onSelect = (newValue) => {
+				setValue([...value, newValue]);
+				setTags([...tags, options.find(o => o.value === newValue)]);
+			};
+			const onClose = (e) => {
+				setValue(tags.filter(t => t.value !== e.target.value.value));
+				setTags(tags.filter(t => t.value !== e.target.value.value));
+			}
+			return (
+				<TaggableInput tags={tags} onClose={onClose}>
+					<Select
+						options={options}
+						onChange={(e) => {
+							e.stopPropagation();
+							onSelect(e.target.value);
+						}}
+					/>
+				</TaggableInput>
+			);
+		}}
+	</Story>
+</Canvas>

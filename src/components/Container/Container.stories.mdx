@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import Container from './Container';
 
@@ -11,14 +12,14 @@ Default container for content
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<Container>
 			<p>This is inside a container</p>
 		</Container>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Container} />
+<ArgsTable of={Container} />

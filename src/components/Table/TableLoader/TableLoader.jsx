@@ -1,4 +1,4 @@
-import { Spinner } from '@acpaas-ui/react-components';
+import { Spinner } from '@redactie/react-components';
 import PropTypes from 'prop-types';
 import React from 'react';
 

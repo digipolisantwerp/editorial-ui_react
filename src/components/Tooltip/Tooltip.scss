@@ -1,4 +1,4 @@
-@import "~@a-ui/core/dist/assets/styles/_quarks";
+@import "~@a-ui/core/dist/assets/styles/quarks";
 
 .a-tooltip {
 	z-index: layer('tooltip');
@@ -124,7 +124,7 @@
 
 		&[data-popper-placement^="top"] {
 			.arrow {
-				border-color: #424242 transparent transparent transparent;
+				border-color: #424242 transparent transparent;
 			}
 		}
 
@@ -142,7 +142,7 @@
 
 		&[data-popper-placement^="bottom"] {
 			.arrow {
-				border-color: transparent transparent #424242 transparent;
+				border-color: transparent transparent #424242;
 			}
 		}
 	}
@@ -151,6 +151,7 @@
 		border: 1px solid #949494;
 		background-color: $white;
 
+		/* stylelint-disable-next-line selector-class-pattern */
 		.innerArrow {
 			width: 0;
 			height: 0;
@@ -160,9 +161,10 @@
 
 		&[data-popper-placement^="top"] {
 			.arrow {
-				border-color: #949494 transparent transparent transparent;
+				border-color: #949494 transparent transparent;
 			}
 
+			/* stylelint-disable-next-line selector-class-pattern */
 			.innerArrow {
 				border-color: $white transparent transparent transparent;
 				border-width: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 calc(0.375rem - 1px);
@@ -176,6 +178,7 @@
 				border-color: transparent transparent transparent #949494;
 			}
 
+			/* stylelint-disable-next-line selector-class-pattern */
 			.innerArrow {
 				border-color: transparent transparent transparent $white;
 				border-width: calc(0.375rem - 1px) 0 calc(0.375rem - 1px) calc(0.375rem - 1px);
@@ -189,6 +192,7 @@
 				border-color: transparent #949494 transparent transparent;
 			}
 
+			/* stylelint-disable-next-line selector-class-pattern */
 			.innerArrow {
 				border-color: transparent $white transparent transparent;
 				border-width: calc(0.375rem - 1px) calc(0.375rem - 1px) calc(0.375rem - 1px) 0;
@@ -199,9 +203,10 @@
 
 		&[data-popper-placement^="bottom"] {
 			.arrow {
-				border-color: transparent transparent #949494 transparent;
+				border-color: transparent transparent #949494;
 			}
 
+			/* stylelint-disable-next-line selector-class-pattern */
 			.innerArrow {
 				border-color: transparent transparent $white transparent;
 				border-width: 0 calc(0.375rem - 1px) calc(0.375rem - 1px) calc(0.375rem - 1px);

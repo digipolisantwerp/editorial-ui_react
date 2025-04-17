@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 import { useState } from 'react';
 import Timepicker from './Timepicker';
 
@@ -11,7 +12,7 @@ Some explanation about our Timepicker component
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		{() => {
 			const [value, setValue] = useState('10:30:0:0');
@@ -62,9 +63,9 @@ Some explanation about our Timepicker component
 			);
 		}}
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={Timepicker} />
+<ArgsTable of={Timepicker} />
 

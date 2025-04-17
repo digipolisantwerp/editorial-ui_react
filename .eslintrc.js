@@ -1,5 +1,5 @@
 module.exports = {
-	parser: 'babel-eslint',
+	parser: '@babel/eslint-parser',
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: 'module',
@@ -13,11 +13,7 @@ module.exports = {
 		node: true,
 	},
 
-	extends: [
-		'eslint:recommended',
-		'airbnb',
-		'airbnb/hooks',
-	],
+	extends: ['eslint:recommended', 'airbnb', 'airbnb/hooks', 'plugin:storybook/recommended'],
 	ignorePatterns: [
 		'dist/*',
 	],
@@ -38,6 +34,10 @@ module.exports = {
 		}],
 		'import/prefer-default-export': 'off',
 
+		'react/function-component-definition': ['error', {
+			namedComponents: ['arrow-function', 'function-declaration'],
+			unnamedComponents: 'arrow-function',
+		}],
 		'react/jsx-indent': ['error', 'tab'],
 		'react/jsx-indent-props': ['error', 'tab'],
 		'react/jsx-props-no-spreading': ['error', { custom: 'ignore' }],

@@ -1,4 +1,4 @@
-import { Button } from '@acpaas-ui/react-components';
+import { Button } from '@redactie/react-components';
 import classnames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';

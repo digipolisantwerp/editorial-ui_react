@@ -1,4 +1,4 @@
-import { TextField } from '@acpaas-ui/react-components';
+import { TextField } from '@redactie/react-components';
 import { fireEvent, getNodeText, render } from '@testing-library/react';
 import React from 'react';
 

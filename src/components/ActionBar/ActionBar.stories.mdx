@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks';
+
 
 import ActionBar from './ActionBar';
 import { ActionBarContentSection } from './ActionBar.slots';
@@ -12,7 +13,7 @@ A simple bar where content can be fitted in
 
 ## Preview of component
 
-<Preview>
+<Canvas>
 	<Story name='Base'>
 		<ActionBar disablePortal isOpen>
 			<ActionBarContentSection>
@@ -21,8 +22,8 @@ A simple bar where content can be fitted in
 			</ActionBarContentSection>
 		</ActionBar>
 	</Story>
-</Preview>
+</Canvas>
 
 ## Props
 
-<Props of={ActionBar} />
+<ArgsTable of={ActionBar} />
